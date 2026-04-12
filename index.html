@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>성수동라이프 이메일 템플릿</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; font-size: 14px; line-height: 1.8; color: #222; background: #e8e8e8; padding: 16px; }
+
+  /* 입력 폼 카드 */
+  .form-card {
+    max-width: 760px; margin: 0 auto 16px; background: #fff;
+    border-radius: 10px; overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  }
+  .form-header {
+    background: #2e7d32; padding: 12px 16px;
+    color: #fff; font-size: 14px; font-weight: bold;
+  }
+  .form-header span { font-size: 12px; font-weight: normal; opacity: 0.85; margin-left: 8px; }
+  .form-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .form-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .form-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 160px; }
+  .form-group label { font-size: 11px; color: #888; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
+  .form-group input, .form-group textarea {
+    border: 1px solid #ddd; border-radius: 6px;
+    padding: 8px 10px; font-size: 13px; font-family: Arial, sans-serif;
+    outline: none; resize: none; color: #222;
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color: #2e7d32; }
+  .form-actions { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 16px 16px; }
+  .btn { padding: 9px 18px; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: bold; white-space: nowrap; }
+  .btn-green { background: #2e7d32; color: #fff; }
+  .btn-outline-green { background: #fff; color: #2e7d32; border: 1.5px solid #2e7d32; }
+  .btn-gray { background: #f0f0f0; color: #555; border: 1px solid #ccc; }
+
+  /* 이메일 미리보기 */
+  .outer { max-width: 760px; margin: 0 auto; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
+  .toolbar { background: #2e7d32; padding: 12px 16px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .toolbar-label { color: #fff; font-size: 13px; font-weight: bold; flex: 1; }
+  .tbtn { padding: 7px 14px; border: none; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; white-space: nowrap; }
+  .tbtn-white { background: #fff; color: #2e7d32; }
+  .tbtn-outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.8); }
+
+  .to-bar { background: #f5f9f5; border-bottom: 1px solid #ddd; padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
+  .to-label { font-size: 12px; color: #888; white-space: nowrap; }
+  .to-val { font-size: 13px; font-weight: bold; color: #1a73e8; flex: 1; }
+  .copy-to { padding: 4px 10px; background: #2e7d32; color: #fff; border: none; border-radius: 4px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+
+  .subject-bar { background: #fafafa; border-bottom: 1px solid #ddd; padding: 10px 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .subject-val { font-size: 13px; font-weight: bold; color: #333; flex: 1; }
+  .copy-subj { padding: 4px 10px; background: #fff; color: #2e7d32; border: 1.5px solid #2e7d32; border-radius: 4px; font-size: 12px; cursor: pointer; }
+
+  .content { padding: 24px; }
+  p { margin-bottom: 12px; }
+  hr { border: none; border-top: 1px solid #e0e0e0; margin: 22px 0; }
+  h3 { font-size: 15px; font-weight: bold; margin: 18px 0 8px; color: #1a1a1a; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 10px; table-layout: auto; }
+  th { background: #f5f5f5; border: 1px solid #ddd; padding: 7px 10px; white-space: nowrap; }
+  td { border: 1px solid #ddd; padding: 7px 10px; vertical-align: middle; }
+  td.nw { white-space: nowrap; }
+  .col-price { width: 80px; text-align: right; white-space: nowrap; }
+  .col-link { width: 56px; text-align: center; white-space: nowrap; }
+  .col-opt-val { text-align: right; white-space: nowrap; }
+  a { color: #1a73e8; text-decoration: none; font-size: 12px; }
+  .notice { font-size: 12px; color: #999; }
+  .old { text-decoration: line-through; color: #bbb; font-size: 12px; }
+  .bold { font-weight: bold; }
+  .red { color: #c0392b; font-weight: bold; }
+  .set-item { font-size: 13px; margin-bottom: 10px; line-height: 1.7; }
+  .set-table th, .set-table td { padding: 6px 7px; text-align: center; white-space: nowrap; font-size: 12px; }
+
+  .sig-handle { font-family: Georgia, 'Times New Roman', serif; font-size: 12px; font-weight: 700; color: #2e7d32; }
+  .sig-tagline { font-family: Georgia, 'Times New Roman', serif; font-size: 12px; color: #555; margin-top: 2px; }
+  .sig-tagline strong { color: #2e7d32; }
+  .sig-contact { font-family: Georgia, 'Times New Roman', serif; font-size: 12px; color: #555; margin-top: 3px; }
+
+  .toast { display: none; position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: #222; color: #fff; padding: 9px 22px; border-radius: 20px; font-size: 13px; z-index: 999; white-space: nowrap; }
+
+  /* 인/아웃바운드 토글 */
+  .toggle-wrap { display: flex; gap: 0; border: 1.5px solid #2e7d32; border-radius: 7px; overflow: hidden; width: fit-content; }
+  .toggle-btn { padding: 7px 20px; border: none; background: #fff; color: #2e7d32; font-size: 13px; font-weight: bold; cursor: pointer; }
+  .toggle-btn.active { background: #2e7d32; color: #fff; }
+</style>
+</head>
+<body>
+
+<!-- 입력 폼 -->
+<div class="form-card">
+  <div class="form-header">✏️ 여기만 채우세요 <span>입력 후 본문이 자동 완성됩니다</span></div>
+  <div class="form-body">
+    <div class="form-row" style="align-items:center;">
+      <div class="form-group" style="flex:0; min-width:unset;">
+        <label>문의 유형</label>
+        <div class="toggle-wrap">
+          <button class="toggle-btn active" id="btn-in" onclick="setType('in')">인바운드</button>
+          <button class="toggle-btn" id="btn-out" onclick="setType('out')">아웃바운드</button>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>수신자 이메일</label>
+        <input type="email" id="f-email" placeholder="example@brand.com" oninput="update()">
+      </div>
+      <div class="form-group">
+        <label>소속 (회사명)</label>
+        <input type="text" id="f-company" placeholder="예: 무신사, 프라우드" oninput="update()">
+      </div>
+      <div class="form-group">
+        <label>담당자 이름</label>
+        <input type="text" id="f-name" placeholder="예: 김인철" oninput="update()">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>행사명</label>
+        <input type="text" id="f-event" placeholder="예: 반스 팝업스토어" oninput="update()">
+      </div>
+      <div class="form-group" style="flex:2; min-width:200px;">
+        <label>특이사항 (첫 문단에 추가할 내용)</label>
+        <input type="text" id="f-note" placeholder="예: 4월 22일 촬영 가능합니다." oninput="update()">
+      </div>
+    </div>
+  </div>
+  <div class="form-actions">
+    <button class="btn btn-green" onclick="copyTo()">📧 수신자 복사</button>
+    <button class="btn btn-outline-green" onclick="copySubject()">제목 복사</button>
+    <button class="btn btn-green" onclick="copyBody()">📋 본문 전체 복사</button>
+    <button class="btn btn-gray" onclick="resetForm()">초기화</button>
+  </div>
+</div>
+
+<!-- 이메일 미리보기 -->
+<div class="outer">
+  <div class="toolbar">
+    <span class="toolbar-label">미리보기</span>
+    <button class="tbtn tbtn-outline" onclick="copyTo()">수신자 복사</button>
+    <button class="tbtn tbtn-outline" onclick="copySubject()">제목 복사</button>
+    <button class="tbtn tbtn-white" onclick="copyBody()">📋 본문 복사</button>
+  </div>
+
+  <div class="to-bar">
+    <span class="to-label">수신자</span>
+    <span class="to-val" id="to-val">—</span>
+    <button class="copy-to" onclick="copyTo()">복사</button>
+  </div>
+
+  <div class="subject-bar">
+    <span class="subject-val" id="subject-val">[성수동라이프] —</span>
+    <button class="copy-subj" onclick="copySubject()">복사</button>
+  </div>
+
+  <div class="content" id="email-body">
+
+    <p id="intro-text"></p>
+
+    <hr>
+
+    <div style="padding: 0 0 0 30px;">
+
+    <h3>1. 리뷰 콘텐츠</h3>
+    <p>현장 방문하여 공간을 촬영하고 사진, 영상으로 소개<br>
+    성수동라이프만의 시선으로 공간을 설명하며, 브랜드에서 원하는 특징을 담아냄<br>
+    방문 후 1~2일 내로 업로드하여 빠른 홍보와 이슈 메이킹</p>
+
+    <p style="margin-top:18px;"><strong>① 피드 (사진)</strong></p>
+    <table>
+      <thead><tr><th style="text-align:left;">상품</th><th>가격</th><th>예시</th></tr></thead>
+      <tbody>
+        <tr><td class="nw">브랜드 제공 이미지</td><td class="col-price">20만원</td><td class="col-link"><a href="https://www.instagram.com/p/DLTq05MpCg6" target="_blank">링크</a></td></tr>
+        <tr><td class="nw">브랜드 제공 + 영상 혼합</td><td class="col-price">25만원</td><td class="col-link"><a href="https://www.instagram.com/p/DJsv_zDugzZ" target="_blank">링크</a></td></tr>
+        <tr><td class="nw">방문 촬영</td><td class="col-price">40만원</td><td class="col-link"><a href="https://www.instagram.com/p/DJdD2U6zK3m" target="_blank">링크</a></td></tr>
+        <tr><td class="nw">방문 촬영 + 영상 혼합</td><td class="col-price">45만원</td><td class="col-link"><a href="https://www.instagram.com/p/DUeo8Z_kzCb" target="_blank">링크</a></td></tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:18px;"><strong>② 릴스 (영상)</strong><br>
+    <span class="notice">※ 평균 조회수 1만 / 최대 조회수 55만 (진로 팝업 / 무신사 퍼레이드)</span></p>
+    <table>
+      <thead><tr><th style="text-align:left;">상품</th><th>가격</th><th>예시</th></tr></thead>
+      <tbody>
+        <tr><td class="nw">브랜드 제공 (제목+소제목 삽입)</td><td class="col-price">30만원</td><td class="col-link"><a href="https://www.instagram.com/reel/DISoSTupE02/" target="_blank">링크</a></td></tr>
+        <tr><td class="nw">방문 촬영 (제목+소제목 삽입)</td><td class="col-price">50만원</td><td class="col-link"><a href="https://www.instagram.com/reel/C0KwrY8PBGo/" target="_blank">링크</a></td></tr>
+        <tr><td class="nw">방문 촬영 + 전체 자막 삽입</td><td class="col-price">70만원</td><td class="col-link"><a href="https://www.instagram.com/reel/DK4VNpfJuoE/" target="_blank">링크</a></td></tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:18px;"><strong>③ 추가 옵션</strong></p>
+    <table>
+      <tbody>
+        <tr><td class="nw">스토리</td><td class="col-opt-val">5만원/회 &nbsp;(피드·릴스 이용 시 무상 제공)</td></tr>
+        <tr><td class="nw">상단 고정</td><td class="col-opt-val">3일 5만원 &nbsp;/&nbsp; 7일 10만원</td></tr>
+        <tr><td class="nw">쓰레드</td><td class="col-opt-val">5만원</td></tr>
+        <tr><td class="nw">당일 업로드</td><td class="col-opt-val">+10만원</td></tr>
+      </tbody>
+    </table>
+    <p class="notice">※ 부킹 후 취소 시 위약금 발생 &nbsp;—&nbsp; 3일 전 5만원 / 1일 전 10만원</p>
+
+    <hr>
+
+    <h3>2. 위클리성수</h3>
+    <p>매주 토요일 오전 한 주의 성수동 소식을 전하는 큐레이션 콘텐츠<br>
+    매주 3만명 이상 노출 / 브랜드 이미지 전달 가능</p>
+    <table>
+      <thead><tr><th style="text-align:left;">상품</th><th>가격</th><th>예시</th></tr></thead>
+      <tbody>
+        <tr><td class="nw">커버 스토리 (커버 이미지 + 첫 번째 소개) &nbsp;<span class="notice">1만 노출 보장</span></td><td class="col-price">20만원</td><td class="col-link"><a href="https://www.instagram.com/p/C6zr1hmv75W" target="_blank">링크</a></td></tr>
+        <tr><td class="nw">두 번째 소개 이후</td><td class="col-price">10만원</td><td class="col-link"><a href="https://www.instagram.com/p/DD0wyLQPZMS" target="_blank">링크</a></td></tr>
+        <tr><td class="nw">2주 연속 소개</td><td class="col-price">+5만원</td><td class="col-link"></td></tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <h3>3. 브랜드 이슈</h3>
+    <p>티징, 브랜드 이벤트 소개 + 팝업 예고<br>
+    브랜드 영상/텍스트 사용, 성수동라이프 톤으로 재구성하여 발행<br>
+    팝업스토어 오픈 전 사전 마케팅에 효과적</p>
+    <table>
+      <thead><tr><th style="text-align:left;">상품</th><th>가격</th><th>예시</th></tr></thead>
+      <tbody>
+        <tr><td class="nw">인스타그램 피드 (이미지 최대 5장 / 텍스트 400~500자)</td><td class="col-price">25만원</td><td style="text-align:center; white-space:nowrap;"><a href="https://www.instagram.com/p/C0h6IEDvCvs/" target="_blank">링크1</a> &nbsp;<a href="https://www.instagram.com/p/DDa_nvlziTR" target="_blank">링크2</a></td></tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <h3>SET 구성 &mdash; 채널은 다양하게, 할인율은 더 높게</h3>
+    <p class="notice" style="margin-bottom:8px;">방문 촬영 기준</p>
+    <div style="overflow-x:auto;">
+    <table class="set-table" style="min-width:580px;">
+      <thead>
+        <tr style="background:#f5f5f5;">
+          <th style="width:52px;">구분</th>
+          <th style="width:52px;">브랜드이슈</th>
+          <th style="width:44px;">피드</th>
+          <th style="width:44px;">릴스</th>
+          <th style="width:60px;">틱톡+유튜브</th>
+          <th style="width:60px;">위클리성수</th>
+          <th style="width:52px;">상단고정</th>
+          <th style="width:44px;">스토리</th>
+          <th style="width:44px;">쓰레드</th>
+          <th style="width:72px;">단가</th>
+          <th style="width:72px;">할인가</th>
+          <th style="width:44px;">할인율</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>SET1</strong></td><td>O</td><td></td><td></td><td></td><td>1주</td><td></td><td>2회</td><td>O</td>
+          <td style="text-align:right;"><span class="old">450,000</span></td><td style="text-align:right;" class="bold">300,000</td><td class="red">33%</td>
+        </tr>
+        <tr style="background:#fafafa;">
+          <td><strong>SET2</strong></td><td></td><td>O</td><td></td><td></td><td>1주</td><td></td><td>2회</td><td>O</td>
+          <td style="text-align:right;"><span class="old">650,000</span></td><td style="text-align:right;" class="bold">500,000</td><td class="red">23%</td>
+        </tr>
+        <tr>
+          <td><strong>SET3</strong></td><td>O</td><td></td><td>O</td><td></td><td>1주</td><td>3일</td><td>2회</td><td>O</td>
+          <td style="text-align:right;"><span class="old">1,050,000</span></td><td style="text-align:right;" class="bold">800,000</td><td class="red">30%</td>
+        </tr>
+        <tr style="background:#fafafa;">
+          <td><strong>SET4</strong></td><td></td><td>O</td><td>O</td><td>O</td><td>2주</td><td>7일</td><td>4회</td><td>O</td>
+          <td style="text-align:right;"><span class="old">1,550,000</span></td><td style="text-align:right;" class="bold">1,000,000</td><td class="red">35%</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="notice" style="margin-top:6px;">※ 브랜드 이슈 : 브랜드 사진 활용해 피드 구성 &nbsp;|&nbsp; ※ 위클리성수 : 주간 팝업 큐레이션 소개</p>
+
+    <div style="margin-top:14px;">
+      <div class="set-item"><strong>SET 1 &middot; 브랜드 에셋 활용형</strong><br>브랜드이슈 + 위클리성수 + 스토리(2회) + 쓰레드 : 45만원 → <strong>30만원 (33% OFF)</strong></div>
+      <div class="set-item"><strong>SET 2 &middot; 사진 강조형</strong><br>피드(촬영) + 위클리성수 + 스토리(2회) + 쓰레드 : 65만원 → <strong>50만원 (23% OFF)</strong></div>
+      <div class="set-item"><strong>SET 3 &middot; 영상 강조형</strong><br>브랜드이슈 + 릴스(자막x) + 위클리성수 + 상단고정(3일) + 스토리(2회) + 쓰레드 : 105만원 → <strong>75만원 (29% OFF)</strong></div>
+      <div class="set-item"><strong>SET 4 &middot; 노출 최대형</strong><br>피드(촬영) + 릴스(자막x/틱톡·유튜브) + 위클리성수(2주) + 상단고정(7일) + 스토리(4회) + 쓰레드 : 155만원 → <strong>100만원 (35% OFF)</strong></div>
+    </div>
+
+    </div><!-- /indent -->
+
+    <hr>
+
+    <p style="font-size:13px; color:#555; line-height:1.8;">
+      진행 프로세스 : 사전 가이드 전달 → 현장 촬영 → 시안 컨펌 → 업로드 → 비용 지급<br>
+      ※ 특정 카테고리의 경우, 일부 바터(브랜드 상품권·제품)로 운영 가능합니다.
+    </p>
+
+    <p style="margin-top:14px;">내용 보시고 궁금한 사항 있으시면 편하게 문의해 주세요. 감사합니다.</p>
+
+    <hr>
+
+    <div>
+      <div class="sig-handle">@sungsooodong</div>
+      <div class="sig-tagline">매일 새로운 성수동 이야기, <strong>성수동라이프</strong></div>
+      <div class="sig-contact">Editor. 장현경 &nbsp;/&nbsp; 010-6412-3365</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let dirType = 'in'; // 'in' = 인바운드, 'out' = 아웃바운드
+
+function setType(t) {
+  dirType = t;
+  document.getElementById('btn-in').classList.toggle('active', t === 'in');
+  document.getElementById('btn-out').classList.toggle('active', t === 'out');
+  update();
+}
+
+function update() {
+  const email   = v('f-email');
+  const company = v('f-company');
+  const name    = v('f-name');
+  const event   = v('f-event');
+  const note    = v('f-note');
+  const eventLabel = event || '[행사명]';
+
+  // 수신자
+  set('to-val', email || '—');
+
+  // 제목
+  set('subject-val', '[성수동라이프] ' + eventLabel + ' 홍보 제안드립니다.');
+
+  // 인사말
+  const greeting = (company || name)
+    ? '안녕하세요, ' + [company, name].filter(Boolean).join(' ') + ' 담당자님.<br>성수동라이프 장현경 에디터입니다.<br><br>'
+    : '안녕하세요.<br>성수동라이프 장현경 에디터입니다.<br><br>';
+
+  let body = greeting;
+
+  if (dirType === 'in') {
+    body += '먼저 연락주셔서 감사합니다.';
+    if (note) body += '<br>' + note;
+    body += '<br>'
+          + '참고로, 성수동라이프는 인스타그램을 중심으로 성수동 소식을 콘텐츠로 제작 및 발행하고 있습니다. (팝업 / F&amp;B / 이벤트 등)<br>'
+          + '아래 운영 중인 상품 소개서 전달드리니 참고 부탁드립니다.';
+  } else {
+    body += '이번에 성수에서 운영하시는 ' + eventLabel + ' 홍보 제안차 메일 드립니다.<br>'
+          + '성수동라이프는 인스타그램을 중심으로 성수동 소식을 콘텐츠로 제작 및 발행하고 있습니다. (팝업 / F&amp;B / 이벤트 등)<br>'
+          + '아래 운영 중인 상품 소개서 전달드리니 참고 부탁드립니다.';
+    if (note) body += '<br>' + note;
+  }
+
+  document.getElementById('intro-text').innerHTML = body;
+}
+
+function v(id) { return document.getElementById(id).value.trim(); }
+function set(id, val) { document.getElementById(id).innerHTML = val; }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.innerText = msg;
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 2200);
+}
+
+function copyTo() {
+  const text = document.getElementById('to-val').innerText;
+  if (text === '—') { showToast('수신자 이메일을 입력해주세요.'); return; }
+  navigator.clipboard.writeText(text)
+    .then(() => showToast('수신자 이메일 복사 완료!'))
+    .catch(() => fallback(text, '수신자 이메일 복사 완료!'));
+}
+
+function copySubject() {
+  const text = document.getElementById('subject-val').innerText;
+  navigator.clipboard.writeText(text)
+    .then(() => showToast('제목 복사 완료!'))
+    .catch(() => fallback(text, '제목 복사 완료!'));
+}
+
+function copyBody() {
+  const el = document.getElementById('email-body');
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+  try {
+    document.execCommand('copy');
+    sel.removeAllRanges();
+    showToast('본문 복사 완료! Gmail 본문에 붙여넣기 하세요.');
+  } catch(e) {
+    showToast('복사 실패 — 직접 선택 후 복사해주세요.');
+  }
+}
+
+function resetForm() {
+  ['f-email','f-company','f-name','f-event','f-note'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  update();
+}
+
+window.onload = update;
+
+function fallback(text, msg) {
+  const el = document.createElement('textarea');
+  el.value = text;
+  el.style.cssText = 'position:fixed;opacity:0;top:0;left:0;';
+  document.body.appendChild(el);
+  el.focus(); el.select();
+  try { document.execCommand('copy'); showToast(msg); }
+  catch(e) { showToast('복사 실패'); }
+  document.body.removeChild(el);
+}
+</script>
+</body>
+</html>
