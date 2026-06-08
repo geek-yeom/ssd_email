@@ -8,59 +8,163 @@
 <link rel="apple-touch-icon" href="SSD_PF.jpg">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: Arial, sans-serif; font-size: 14px; line-height: 1.8; color: #222; background: #e8e8e8; padding: 16px; }
-  .form-card { max-width: 760px; margin: 0 auto 16px; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
-  .form-header { background: #2e7d32; padding: 12px 16px; color: #fff; font-size: 14px; font-weight: bold; }
-  .form-header span { font-size: 12px; font-weight: normal; opacity: 0.85; margin-left: 8px; }
-  .form-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
-  .form-row { display: flex; gap: 10px; flex-wrap: wrap; }
-  .form-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 160px; }
-  .form-group label { font-size: 11px; color: #888; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
-  .form-group input { border: 1px solid #ddd; border-radius: 6px; padding: 8px 10px; font-size: 13px; font-family: Arial, sans-serif; outline: none; color: #222; }
-  .form-group input:focus { border-color: #2e7d32; }
-  .form-actions { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 16px 16px; }
-  .btn { padding: 9px 18px; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: bold; white-space: nowrap; }
-  .btn-green { background: #2e7d32; color: #fff; }
-  .btn-outline-green { background: #fff; color: #2e7d32; border: 1.5px solid #2e7d32; }
-  .btn-gray { background: #f0f0f0; color: #555; border: 1px solid #ccc; }
-  .toggle-wrap { display: flex; border: 1.5px solid #2e7d32; border-radius: 7px; overflow: hidden; width: fit-content; }
-  .toggle-btn { padding: 8px 16px; border: none; background: #fff; color: #2e7d32; font-size: 13px; font-weight: bold; cursor: pointer; }
-  .toggle-btn.active { background: #2e7d32; color: #fff; }
-  .lang-wrap { display: flex; border: 1.5px solid #555; border-radius: 7px; overflow: hidden; width: fit-content; }
-  .lang-btn { padding: 8px 20px; border: none; background: #fff; color: #555; font-size: 13px; font-weight: bold; cursor: pointer; }
-  .lang-btn.active { background: #555; color: #fff; }
 
-  /* 문의유형 버튼 그리드 — PC: 1행, 모바일: 2x2 */
-  .dir-grid { display: flex; border: 1.5px solid #2e7d32; border-radius: 7px; overflow: hidden; width: fit-content; }
-  .dir-grid .toggle-btn { border-right: 1px solid #d0ebd0; }
-  .dir-grid .toggle-btn:last-child { border-right: none; }
-
-  @media (max-width: 540px) {
-    .dir-grid { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
-    .dir-grid .toggle-btn { border-right: 1px solid #d0ebd0; border-bottom: 1px solid #d0ebd0; }
-    .dir-grid .toggle-btn:nth-child(2) { border-right: none; }
-    .dir-grid .toggle-btn:nth-child(3) { border-bottom: none; }
-    .dir-grid .toggle-btn:nth-child(4) { border-right: none; border-bottom: none; }
-    .lang-btn { padding: 8px 14px; font-size: 12px; }
-    .form-row { flex-direction: column; }
-    .form-group { min-width: unset !important; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    font-size: 15px; line-height: 1.6; color: #1c1c1e;
+    background: #f2f2f7; padding: 16px;
+    -webkit-font-smoothing: antialiased;
   }
-  .outer { max-width: 760px; margin: 0 auto; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
-  .toolbar { background: #2e7d32; padding: 12px 16px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-  .toolbar-label { color: #fff; font-size: 13px; font-weight: bold; flex: 1; }
-  .tbtn { padding: 7px 14px; border: none; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; white-space: nowrap; }
-  .tbtn-white { background: #fff; color: #2e7d32; }
-  .tbtn-outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.8); }
-  .to-bar { background: #f5f9f5; border-bottom: 1px solid #ddd; padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
-  .to-label { font-size: 12px; color: #888; white-space: nowrap; }
-  .to-val { font-size: 13px; font-weight: bold; color: #1a73e8; flex: 1; }
-  .copy-to { padding: 4px 10px; background: #2e7d32; color: #fff; border: none; border-radius: 4px; font-size: 12px; cursor: pointer; }
-  .subject-bar { background: #fafafa; border-bottom: 1px solid #ddd; padding: 10px 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .subject-val { font-size: 13px; font-weight: bold; color: #333; flex: 1; }
-  .copy-subj { padding: 4px 10px; background: #fff; color: #2e7d32; border: 1.5px solid #2e7d32; border-radius: 4px; font-size: 12px; cursor: pointer; }
-  .content { padding: 24px; }
+
+  /* ── 폼 카드 ── */
+  .form-card {
+    max-width: 720px; margin: 0 auto 16px;
+    background: #fff; border-radius: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+  .form-header {
+    padding: 18px 20px 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .form-header-title {
+    font-size: 17px; font-weight: 600; color: #1c1c1e; letter-spacing: -0.3px;
+  }
+  .form-header-sub {
+    font-size: 13px; color: #8e8e93; margin-top: 2px;
+  }
+  .form-body { padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
+  .form-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .form-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 160px; }
+  .form-group label {
+    font-size: 12px; color: #8e8e93; font-weight: 500; letter-spacing: 0.2px;
+  }
+  .form-group input {
+    border: none; border-radius: 10px; padding: 11px 14px;
+    font-size: 15px; font-family: inherit; outline: none; color: #1c1c1e;
+    background: #f2f2f7; transition: background 0.15s;
+    -webkit-appearance: none;
+  }
+  .form-group input:focus { background: #e8e8ed; }
+  .form-group textarea {
+    border: none; border-radius: 10px; padding: 11px 14px;
+    font-size: 15px; font-family: inherit; outline: none; color: #1c1c1e;
+    background: #f2f2f7; resize: vertical; transition: background 0.15s;
+  }
+  .form-group textarea:focus { background: #e8e8ed; }
+
+  /* ── 섹션 구분선 ── */
+  .form-divider { height: 1px; background: #f0f0f0; margin: 2px 0; }
+
+  /* ── 문의 유형 — 1행 ── */
+  .dir-grid-row {
+    display: flex; background: #f2f2f7;
+    border-radius: 12px; overflow: hidden;
+    gap: 1px; width: 100%;
+  }
+  .dir-grid-row .dir-btn { flex: 1; }
+
+  /* ── 문의 유형 그리드 (2x2 fallback) ── */
+  .dir-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-radius: 12px; overflow: hidden;
+    background: #f2f2f7; gap: 1px; width: 100%;
+  }
+  .dir-btn {
+    padding: 10px 8px; border: none; background: #f2f2f7;
+    color: #3a3a3c; font-size: 13px; font-weight: 500;
+    cursor: pointer; text-align: center; transition: all 0.15s;
+    font-family: inherit;
+  }
+  .dir-btn.active {
+    background: #fff; color: #1c1c1e; font-weight: 600;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    border-radius: 10px; margin: 2px;
+  }
+
+  /* ── 언어 토글 — 작게 ── */
+  .lang-seg {
+    display: inline-flex; background: #e5e5ea;
+    border-radius: 8px; padding: 2px; gap: 1px;
+  }
+  .lang-btn {
+    padding: 5px 12px; border: none; background: transparent;
+    color: #8e8e93; font-size: 12px; font-weight: 500;
+    cursor: pointer; border-radius: 6px; transition: all 0.15s;
+    font-family: inherit;
+  }
+  .lang-btn.active {
+    background: #fff; color: #1c1c1e; font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  /* ── 소개서 토글 ── */
+  .toggle-wrap { display: inline-flex; background: #e5e5ea; border-radius: 9px; padding: 2px; gap: 2px; }
+  .toggle-btn { padding: 7px 16px; border: none; background: transparent; color: #3a3a3c; font-size: 13px; font-weight: 500; cursor: pointer; border-radius: 7px; transition: all 0.15s; font-family: inherit; }
+  .toggle-btn.active { background: #fff; color: #1c1c1e; font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+
+  /* ── 액션 버튼 ── */
+  .form-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 20px 20px; }
+  .btn {
+    padding: 13px 18px; border: none; border-radius: 12px;
+    font-size: 15px; cursor: pointer; font-weight: 600;
+    font-family: inherit; letter-spacing: -0.2px; transition: opacity 0.15s;
+  }
+  .btn:active { opacity: 0.75; }
+  .btn-green { background: #1c1c1e; color: #fff; }
+  .btn-outline-green { background: #f2f2f7; color: #1c1c1e; }
+  .btn-gray { background: #f2f2f7; color: #8e8e93; }
+  .btn-full { grid-column: 1 / -1; }
+
+  /* ── 미리보기 카드 ── */
+  .outer {
+    max-width: 720px; margin: 0 auto;
+    background: #fff; border-radius: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+  .toolbar {
+    padding: 14px 20px; display: flex; gap: 8px;
+    flex-wrap: wrap; align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .toolbar-label { font-size: 13px; font-weight: 600; color: #8e8e93; flex: 1; letter-spacing: 0.3px; text-transform: uppercase; }
+  .tbtn {
+    padding: 7px 14px; border: none; border-radius: 8px;
+    font-size: 12px; cursor: pointer; font-weight: 600;
+    font-family: inherit; background: #f2f2f7; color: #1c1c1e;
+    transition: opacity 0.15s;
+  }
+  .tbtn:active { opacity: 0.7; }
+  .tbtn-accent { background: #1c1c1e; color: #fff; }
+
+  .to-bar {
+    padding: 11px 20px; display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .to-label { font-size: 12px; color: #8e8e93; white-space: nowrap; font-weight: 500; }
+  .to-val { font-size: 14px; font-weight: 500; color: #007aff; flex: 1; }
+  .copy-to {
+    padding: 5px 12px; background: #f2f2f7; color: #1c1c1e;
+    border: none; border-radius: 7px; font-size: 12px;
+    font-weight: 600; cursor: pointer; font-family: inherit;
+  }
+
+  .subject-bar {
+    padding: 11px 20px; display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid #f0f0f0; background: #fafafa;
+  }
+  .subject-val { font-size: 14px; font-weight: 500; color: #1c1c1e; flex: 1; }
+  .copy-subj {
+    padding: 5px 12px; background: #f2f2f7; color: #1c1c1e;
+    border: none; border-radius: 7px; font-size: 12px;
+    font-weight: 600; cursor: pointer; font-family: inherit;
+  }
+
+  /* ── 이메일 본문 ── */
+  .content { padding: 24px; font-family: Arial, sans-serif; }
   p { margin-bottom: 12px; }
-  hr { border: none; border-top: 1px solid #e0e0e0; margin: 22px 0; }
+  hr { border: none; border-top: 1px solid #e5e5ea; margin: 22px 0; }
   h3 { font-size: 15px; font-weight: bold; margin: 18px 0 8px; color: #1a1a1a; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 10px; table-layout: auto; }
   th { background: #f5f5f5; border: 1px solid #ddd; padding: 7px 10px; white-space: nowrap; }
@@ -86,28 +190,29 @@
 <body>
 
 <div class="form-card">
-  <div class="form-header">&#9999;&#65039; <span id="lbl-header">여기만 채우세요 — 입력 후 본문이 자동 완성됩니다</span></div>
+  <div class="form-header">
+    <div class="form-header-title">✉️ 성수동라이프 이메일 템플릿</div>
+    <div class="form-header-sub" id="lbl-header">여기만 채우세요 — 입력 후 본문이 자동 완성됩니다</div>
+  </div>
   <div class="form-body">
 
     <!-- Row 1: 문의유형 + 언어 -->
-    <div style="display:flex; gap:12px; align-items:flex-end; border-bottom:1px solid #f0f0f0; padding-bottom:14px; margin-bottom:4px; flex-wrap:nowrap;">
-      <div style="display:flex; flex-direction:column; gap:5px; flex:1;">
-        <label style="font-size:11px; color:#888; font-weight:bold; text-transform:uppercase; letter-spacing:0.5px;" id="lbl-type">문의 유형</label>
-        <div class="dir-grid">
-          <button class="toggle-btn active" id="btn-in" onclick="setDir('in')">Inbound</button>
-          <button class="toggle-btn" id="btn-out" onclick="setDir('out')">Outbound</button>
-          <button class="toggle-btn" id="btn-barter" onclick="setDir('barter')">유가→바터</button>
-          <button class="toggle-btn" id="btn-custom" onclick="setDir('custom')">커스텀</button>
-        </div>
+    <div>
+      <label style="font-size:12px; color:#8e8e93; font-weight:500; display:block; margin-bottom:6px;" id="lbl-type">문의 유형</label>
+      <div class="dir-grid-row">
+        <button class="dir-btn active" id="btn-in" onclick="setDir('in')">Inbound</button>
+        <button class="dir-btn" id="btn-out" onclick="setDir('out')">Outbound</button>
+        <button class="dir-btn" id="btn-barter" onclick="setDir('barter')">유가→바터</button>
+        <button class="dir-btn" id="btn-custom" onclick="setDir('custom')">커스텀</button>
       </div>
-      <div style="display:flex; flex-direction:column; gap:5px; flex-shrink:0;">
-        <label style="font-size:11px; color:#888; font-weight:bold; text-transform:uppercase; letter-spacing:0.5px;">Language</label>
-        <div class="lang-wrap">
+      <div style="display:flex; justify-content:flex-end; margin-top:10px;">
+        <div class="lang-seg">
           <button class="lang-btn active" id="btn-ko" onclick="setLang('ko')">한국어</button>
           <button class="lang-btn" id="btn-en" onclick="setLang('en')">English</button>
         </div>
       </div>
     </div>
+    <div class="form-divider"></div>
 
     <!-- Row 2: 수신자 / 소속 / 담당자 -->
     <div class="form-row">
@@ -209,9 +314,9 @@
     </details>
   </div>
   <div class="form-actions">
-    <button class="btn btn-green" onclick="copyTo()">&#128231; <span id="lbl-btn-to">수신자 복사</span></button>
+    <button class="btn btn-outline-green" onclick="copyTo()">&#128231; <span id="lbl-btn-to">수신자 복사</span></button>
     <button class="btn btn-outline-green" onclick="copySubject()"><span id="lbl-btn-subj">제목 복사</span></button>
-    <button class="btn btn-green" onclick="copyBody()">&#128203; <span id="lbl-btn-body">본문 전체 복사</span></button>
+    <button class="btn btn-green btn-full" onclick="copyBody()">&#128203; <span id="lbl-btn-body">본문 전체 복사</span></button>
     <button class="btn btn-gray" onclick="resetForm()"><span id="lbl-btn-reset">초기화</span></button>
   </div>
 </div>
@@ -219,9 +324,9 @@
 <div class="outer">
   <div class="toolbar">
     <span class="toolbar-label" id="lbl-preview">미리보기</span>
-    <button class="tbtn tbtn-outline" onclick="copyTo()"><span id="lbl-tbtn-to">수신자 복사</span></button>
-    <button class="tbtn tbtn-outline" onclick="copySubject()"><span id="lbl-tbtn-subj">제목 복사</span></button>
-    <button class="tbtn tbtn-white" onclick="copyBody()">&#128203; <span id="lbl-tbtn-body">본문 복사</span></button>
+    <button class="tbtn" onclick="copyTo()"><span id="lbl-tbtn-to">수신자 복사</span></button>
+    <button class="tbtn" onclick="copySubject()"><span id="lbl-tbtn-subj">제목 복사</span></button>
+    <button class="tbtn tbtn-accent" onclick="copyBody()">&#128203; <span id="lbl-tbtn-body">본문 복사</span></button>
   </div>
   <div class="to-bar">
     <span class="to-label" id="lbl-to">수신자</span>
@@ -575,10 +680,10 @@ function update() {
 
 function setDir(d) {
   dir = d;
-  document.getElementById('btn-in').classList.toggle('active', d === 'in');
-  document.getElementById('btn-out').classList.toggle('active', d === 'out');
-  document.getElementById('btn-barter').classList.toggle('active', d === 'barter');
-  document.getElementById('btn-custom').classList.toggle('active', d === 'custom');
+  ['btn-in','btn-out','btn-barter','btn-custom'].forEach(function(id) {
+    document.getElementById(id).classList.remove('active');
+  });
+  document.getElementById('btn-' + (d === 'in' ? 'in' : d === 'out' ? 'out' : d === 'barter' ? 'barter' : 'custom')).classList.add('active');
   document.getElementById('custom-row').style.display = (d === 'custom') ? '' : 'none';
   document.getElementById('catalog-toggle-row').style.display = (d === 'custom') ? '' : 'none';
   update();
