@@ -3,55 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>성수동라이프 이메일 템플릿</title>
+<title>Sungsooodong Email Template</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: Arial, sans-serif; font-size: 14px; line-height: 1.8; color: #222; background: #e8e8e8; padding: 16px; }
-
-  /* 입력 폼 카드 */
-  .form-card {
-    max-width: 760px; margin: 0 auto 16px; background: #fff;
-    border-radius: 10px; overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
-  }
-  .form-header {
-    background: #2e7d32; padding: 12px 16px;
-    color: #fff; font-size: 14px; font-weight: bold;
-  }
+  .form-card { max-width: 760px; margin: 0 auto 16px; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
+  .form-header { background: #2e7d32; padding: 12px 16px; color: #fff; font-size: 14px; font-weight: bold; }
   .form-header span { font-size: 12px; font-weight: normal; opacity: 0.85; margin-left: 8px; }
   .form-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
   .form-row { display: flex; gap: 10px; flex-wrap: wrap; }
   .form-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 160px; }
   .form-group label { font-size: 11px; color: #888; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
-  .form-group input, .form-group textarea {
-    border: 1px solid #ddd; border-radius: 6px;
-    padding: 8px 10px; font-size: 13px; font-family: Arial, sans-serif;
-    outline: none; resize: none; color: #222;
-  }
-  .form-group input:focus, .form-group textarea:focus { border-color: #2e7d32; }
+  .form-group input { border: 1px solid #ddd; border-radius: 6px; padding: 8px 10px; font-size: 13px; font-family: Arial, sans-serif; outline: none; color: #222; }
+  .form-group input:focus { border-color: #2e7d32; }
   .form-actions { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 16px 16px; }
   .btn { padding: 9px 18px; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: bold; white-space: nowrap; }
   .btn-green { background: #2e7d32; color: #fff; }
   .btn-outline-green { background: #fff; color: #2e7d32; border: 1.5px solid #2e7d32; }
   .btn-gray { background: #f0f0f0; color: #555; border: 1px solid #ccc; }
-
-  /* 이메일 미리보기 */
+  .toggle-wrap { display: flex; border: 1.5px solid #2e7d32; border-radius: 7px; overflow: hidden; width: fit-content; }
+  .toggle-btn { padding: 8px 16px; border: none; background: #fff; color: #2e7d32; font-size: 13px; font-weight: bold; cursor: pointer; }
+  .toggle-btn.active { background: #2e7d32; color: #fff; }
+  .lang-wrap { display: flex; border: 1.5px solid #555; border-radius: 7px; overflow: hidden; width: fit-content; }
+  .lang-btn { padding: 8px 20px; border: none; background: #fff; color: #555; font-size: 13px; font-weight: bold; cursor: pointer; }
+  .lang-btn.active { background: #555; color: #fff; }
   .outer { max-width: 760px; margin: 0 auto; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
   .toolbar { background: #2e7d32; padding: 12px 16px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
   .toolbar-label { color: #fff; font-size: 13px; font-weight: bold; flex: 1; }
   .tbtn { padding: 7px 14px; border: none; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; white-space: nowrap; }
   .tbtn-white { background: #fff; color: #2e7d32; }
   .tbtn-outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.8); }
-
   .to-bar { background: #f5f9f5; border-bottom: 1px solid #ddd; padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
   .to-label { font-size: 12px; color: #888; white-space: nowrap; }
   .to-val { font-size: 13px; font-weight: bold; color: #1a73e8; flex: 1; }
-  .copy-to { padding: 4px 10px; background: #2e7d32; color: #fff; border: none; border-radius: 4px; font-size: 12px; cursor: pointer; white-space: nowrap; }
-
+  .copy-to { padding: 4px 10px; background: #2e7d32; color: #fff; border: none; border-radius: 4px; font-size: 12px; cursor: pointer; }
   .subject-bar { background: #fafafa; border-bottom: 1px solid #ddd; padding: 10px 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .subject-val { font-size: 13px; font-weight: bold; color: #333; flex: 1; }
   .copy-subj { padding: 4px 10px; background: #fff; color: #2e7d32; border: 1.5px solid #2e7d32; border-radius: 4px; font-size: 12px; cursor: pointer; }
-
   .content { padding: 24px; }
   p { margin-bottom: 12px; }
   hr { border: none; border-top: 1px solid #e0e0e0; margin: 22px 0; }
@@ -60,8 +48,8 @@
   th { background: #f5f5f5; border: 1px solid #ddd; padding: 7px 10px; white-space: nowrap; }
   td { border: 1px solid #ddd; padding: 7px 10px; vertical-align: middle; }
   td.nw { white-space: nowrap; }
-  .col-price { width: 80px; text-align: right; white-space: nowrap; }
-  .col-link { width: 56px; text-align: center; white-space: nowrap; }
+  .col-price { width: 90px; text-align: right; white-space: nowrap; }
+  .col-link { width: 60px; text-align: center; white-space: nowrap; }
   .col-opt-val { text-align: right; white-space: nowrap; }
   a { color: #1a73e8; text-decoration: none; font-size: 12px; }
   .notice { font-size: 12px; color: #999; }
@@ -69,336 +57,593 @@
   .bold { font-weight: bold; }
   .red { color: #c0392b; font-weight: bold; }
   .set-item { font-size: 13px; margin-bottom: 10px; line-height: 1.7; }
-  .set-table th, .set-table td { padding: 6px 7px; text-align: center; white-space: nowrap; font-size: 12px; }
-
-  .sig-handle { font-family: Georgia, 'Times New Roman', serif; font-size: 12px; font-weight: 700; color: #2e7d32; }
-  .sig-tagline { font-family: Georgia, 'Times New Roman', serif; font-size: 12px; color: #555; margin-top: 2px; }
+  .set-tbl th, .set-tbl td { padding: 6px 7px; text-align: center; white-space: nowrap; font-size: 12px; }
+  .sig-handle { font-family: Georgia, serif; font-size: 12px; font-weight: 700; color: #2e7d32; }
+  .sig-tagline { font-family: Georgia, serif; font-size: 12px; color: #555; margin-top: 2px; }
   .sig-tagline strong { color: #2e7d32; }
-  .sig-contact { font-family: Georgia, 'Times New Roman', serif; font-size: 12px; color: #555; margin-top: 3px; }
-
+  .sig-contact { font-family: Georgia, serif; font-size: 12px; color: #555; margin-top: 3px; }
   .toast { display: none; position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: #222; color: #fff; padding: 9px 22px; border-radius: 20px; font-size: 13px; z-index: 999; white-space: nowrap; }
-
-  /* 인/아웃바운드 토글 */
-  .toggle-wrap { display: flex; gap: 0; border: 1.5px solid #2e7d32; border-radius: 7px; overflow: hidden; width: fit-content; }
-  .toggle-btn { padding: 7px 20px; border: none; background: #fff; color: #2e7d32; font-size: 13px; font-weight: bold; cursor: pointer; }
-  .toggle-btn.active { background: #2e7d32; color: #fff; }
 </style>
 </head>
 <body>
 
-<!-- 입력 폼 -->
 <div class="form-card">
-  <div class="form-header">✏️ 여기만 채우세요 <span>입력 후 본문이 자동 완성됩니다</span></div>
+  <div class="form-header">&#9999;&#65039; <span id="lbl-header">여기만 채우세요 — 입력 후 본문이 자동 완성됩니다</span></div>
   <div class="form-body">
-    <div class="form-row" style="align-items:center;">
-      <div class="form-group" style="flex:0; min-width:unset;">
-        <label>문의 유형</label>
+
+    <!-- Row 1: 문의유형 + 언어 -->
+    <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-end; border-bottom:1px solid #f0f0f0; padding-bottom:14px; margin-bottom:4px;">
+      <div style="display:flex; flex-direction:column; gap:5px;">
+        <label style="font-size:11px; color:#888; font-weight:bold; text-transform:uppercase; letter-spacing:0.5px;" id="lbl-type">문의 유형</label>
         <div class="toggle-wrap">
-          <button class="toggle-btn active" id="btn-in" onclick="setType('in')">인바운드</button>
-          <button class="toggle-btn" id="btn-out" onclick="setType('out')">아웃바운드</button>
+          <button class="toggle-btn active" id="btn-in" onclick="setDir('in')">Inbound</button>
+          <button class="toggle-btn" id="btn-out" onclick="setDir('out')">Outbound</button>
+          <button class="toggle-btn" id="btn-barter" onclick="setDir('barter')">유가→바터</button>
+          <button class="toggle-btn" id="btn-custom" onclick="setDir('custom')">커스텀</button>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:5px;">
+        <label style="font-size:11px; color:#888; font-weight:bold; text-transform:uppercase; letter-spacing:0.5px;">Language</label>
+        <div class="lang-wrap">
+          <button class="lang-btn active" id="btn-ko" onclick="setLang('ko')">한국어</button>
+          <button class="lang-btn" id="btn-en" onclick="setLang('en')">English</button>
         </div>
       </div>
     </div>
+
+    <!-- Row 2: 수신자 / 소속 / 담당자 -->
     <div class="form-row">
       <div class="form-group">
-        <label>수신자 이메일</label>
+        <label id="lbl-email">수신자 이메일</label>
         <input type="email" id="f-email" placeholder="example@brand.com" oninput="update()">
       </div>
       <div class="form-group">
-        <label>소속 (회사명)</label>
-        <input type="text" id="f-company" placeholder="예: 무신사, 프라우드" oninput="update()">
+        <label id="lbl-company">소속 (회사명)</label>
+        <input type="text" id="f-company" placeholder="예: 무신사" oninput="update()">
       </div>
       <div class="form-group">
-        <label>담당자 이름</label>
+        <label id="lbl-name">담당자 이름</label>
         <input type="text" id="f-name" placeholder="예: 김인철" oninput="update()">
       </div>
     </div>
+
+    <!-- Row 3: 행사명 / 특이사항 -->
     <div class="form-row">
       <div class="form-group">
-        <label>행사명</label>
+        <label id="lbl-event">행사명</label>
         <input type="text" id="f-event" placeholder="예: 반스 팝업스토어" oninput="update()">
       </div>
       <div class="form-group" style="flex:2; min-width:200px;">
-        <label>특이사항 (첫 문단에 추가할 내용)</label>
+        <label id="lbl-note">특이사항</label>
         <input type="text" id="f-note" placeholder="예: 4월 22일 촬영 가능합니다." oninput="update()">
       </div>
     </div>
+    <div class="form-row" id="custom-row" style="display:none;">
+      <div class="form-group">
+        <label>커스텀 본문 입력</label>
+        <textarea id="f-custom" rows="5" style="border:1px solid #ddd;border-radius:6px;padding:8px 10px;font-size:13px;font-family:Arial,sans-serif;resize:vertical;outline:none;" placeholder="직접 입력하세요..." oninput="update()"></textarea>
+      </div>
+    </div>
+    <div class="form-row" id="catalog-toggle-row" style="display:none; align-items:center;">
+      <div class="form-group" style="flex:0; min-width:unset;">
+        <label>상품 소개서</label>
+        <div class="toggle-wrap" style="border-color:#2e7d32;">
+          <button class="toggle-btn active" id="btn-catalog-on" onclick="setCatalog(true)">포함</button>
+          <button class="toggle-btn" id="btn-catalog-off" onclick="setCatalog(false)">제외</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="padding: 0 16px 12px;">
+    <details style="font-size:13px; color:#555;">
+      <summary style="cursor:pointer; font-weight:bold; color:#2e7d32; padding:6px 0;">&#9881;&#65039; 고급 옵션 (가격 수정 / SET 숨기기)</summary>
+      <div style="margin-top:12px; display:flex; flex-direction:column; gap:12px;">
+
+        <div>
+          <div style="font-size:11px; font-weight:bold; color:#888; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">① 피드 가격</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px;">
+              <label style="font-size:11px;color:#aaa;">브랜드 제공</label>
+              <input type="text" id="p-feed1" value="20만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
+            </div>
+            <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px;">
+              <label style="font-size:11px;color:#aaa;">브랜드+영상혼합</label>
+              <input type="text" id="p-feed2" value="25만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
+            </div>
+            <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px;">
+              <label style="font-size:11px;color:#aaa;">방문 촬영</label>
+              <input type="text" id="p-feed3" value="40만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
+            </div>
+            <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px;">
+              <label style="font-size:11px;color:#aaa;">방문+영상혼합</label>
+              <input type="text" id="p-feed4" value="45만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:11px; font-weight:bold; color:#888; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">② 릴스 가격</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px;">
+              <label style="font-size:11px;color:#aaa;">브랜드 제공</label>
+              <input type="text" id="p-reels1" value="30만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
+            </div>
+            <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px;">
+              <label style="font-size:11px;color:#aaa;">방문 촬영</label>
+              <input type="text" id="p-reels2" value="50만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
+            </div>
+            <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px;">
+              <label style="font-size:11px;color:#aaa;">방문+전체자막</label>
+              <input type="text" id="p-reels3" value="70만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="font-size:11px; font-weight:bold; color:#888; text-transform:uppercase; letter-spacing:0.5px;">SET 구성</div>
+          <div class="toggle-wrap" style="border-color:#2e7d32;">
+            <button class="toggle-btn active" id="btn-set-show" onclick="setSetVisible(true)">표시</button>
+            <button class="toggle-btn" id="btn-set-hide" onclick="setSetVisible(false)">숨김</button>
+          </div>
+        </div>
+
+      </div>
+    </details>
   </div>
   <div class="form-actions">
-    <button class="btn btn-green" onclick="copyTo()">📧 수신자 복사</button>
-    <button class="btn btn-outline-green" onclick="copySubject()">제목 복사</button>
-    <button class="btn btn-green" onclick="copyBody()">📋 본문 전체 복사</button>
-    <button class="btn btn-gray" onclick="resetForm()">초기화</button>
+    <button class="btn btn-green" onclick="copyTo()">&#128231; <span id="lbl-btn-to">수신자 복사</span></button>
+    <button class="btn btn-outline-green" onclick="copySubject()"><span id="lbl-btn-subj">제목 복사</span></button>
+    <button class="btn btn-green" onclick="copyBody()">&#128203; <span id="lbl-btn-body">본문 전체 복사</span></button>
+    <button class="btn btn-gray" onclick="resetForm()"><span id="lbl-btn-reset">초기화</span></button>
   </div>
 </div>
 
-<!-- 이메일 미리보기 -->
 <div class="outer">
   <div class="toolbar">
-    <span class="toolbar-label">미리보기</span>
-    <button class="tbtn tbtn-outline" onclick="copyTo()">수신자 복사</button>
-    <button class="tbtn tbtn-outline" onclick="copySubject()">제목 복사</button>
-    <button class="tbtn tbtn-white" onclick="copyBody()">📋 본문 복사</button>
+    <span class="toolbar-label" id="lbl-preview">미리보기</span>
+    <button class="tbtn tbtn-outline" onclick="copyTo()"><span id="lbl-tbtn-to">수신자 복사</span></button>
+    <button class="tbtn tbtn-outline" onclick="copySubject()"><span id="lbl-tbtn-subj">제목 복사</span></button>
+    <button class="tbtn tbtn-white" onclick="copyBody()">&#128203; <span id="lbl-tbtn-body">본문 복사</span></button>
   </div>
-
   <div class="to-bar">
-    <span class="to-label">수신자</span>
+    <span class="to-label" id="lbl-to">수신자</span>
     <span class="to-val" id="to-val">—</span>
-    <button class="copy-to" onclick="copyTo()">복사</button>
+    <button class="copy-to" onclick="copyTo()" id="lbl-copy-to">복사</button>
   </div>
-
   <div class="subject-bar">
-    <span class="subject-val" id="subject-val">[성수동라이프] —</span>
-    <button class="copy-subj" onclick="copySubject()">복사</button>
+    <span class="subject-val" id="subject-val">[Sungsooodong] —</span>
+    <button class="copy-subj" onclick="copySubject()" id="lbl-copy-subj">복사</button>
   </div>
-
   <div class="content" id="email-body">
-
     <p id="intro-text"></p>
-
-    <hr>
-
-    <div style="padding: 0 0 0 30px;">
-
-    <h3>1. 리뷰 콘텐츠</h3>
-    <p>현장 방문하여 공간을 촬영하고 사진, 영상으로 소개<br>
-    성수동라이프만의 시선으로 공간을 설명하며, 브랜드에서 원하는 특징을 담아냄<br>
-    방문 후 1~2일 내로 업로드하여 빠른 홍보와 이슈 메이킹</p>
-
-    <p style="margin-top:18px;"><strong>① 피드 (사진)</strong></p>
-    <table>
-      <thead><tr><th style="text-align:left;">상품</th><th>가격</th><th>예시</th></tr></thead>
-      <tbody>
-        <tr><td class="nw">브랜드 제공 이미지</td><td class="col-price">20만원</td><td class="col-link"><a href="https://www.instagram.com/p/DLTq05MpCg6" target="_blank">링크</a></td></tr>
-        <tr><td class="nw">브랜드 제공 + 영상 혼합</td><td class="col-price">25만원</td><td class="col-link"><a href="https://www.instagram.com/p/DJsv_zDugzZ" target="_blank">링크</a></td></tr>
-        <tr><td class="nw">방문 촬영</td><td class="col-price">40만원</td><td class="col-link"><a href="https://www.instagram.com/p/DJdD2U6zK3m" target="_blank">링크</a></td></tr>
-        <tr><td class="nw">방문 촬영 + 영상 혼합</td><td class="col-price">45만원</td><td class="col-link"><a href="https://www.instagram.com/p/DUeo8Z_kzCb" target="_blank">링크</a></td></tr>
-      </tbody>
-    </table>
-
-    <p style="margin-top:18px;"><strong>② 릴스 (영상)</strong><br>
-    <span class="notice">※ 평균 조회수 1만 / 최대 조회수 55만 (진로 팝업 / 무신사 퍼레이드)</span></p>
-    <table>
-      <thead><tr><th style="text-align:left;">상품</th><th>가격</th><th>예시</th></tr></thead>
-      <tbody>
-        <tr><td class="nw">브랜드 제공 (제목+소제목 삽입)</td><td class="col-price">30만원</td><td class="col-link"><a href="https://www.instagram.com/reel/DISoSTupE02/" target="_blank">링크</a></td></tr>
-        <tr><td class="nw">방문 촬영 (제목+소제목 삽입)</td><td class="col-price">50만원</td><td class="col-link"><a href="https://www.instagram.com/reel/C0KwrY8PBGo/" target="_blank">링크</a></td></tr>
-        <tr><td class="nw">방문 촬영 + 전체 자막 삽입</td><td class="col-price">70만원</td><td class="col-link"><a href="https://www.instagram.com/reel/DK4VNpfJuoE/" target="_blank">링크</a></td></tr>
-      </tbody>
-    </table>
-
-    <p style="margin-top:18px;"><strong>③ 추가 옵션</strong></p>
-    <table>
-      <tbody>
-        <tr><td class="nw">스토리</td><td class="col-opt-val">5만원/회 &nbsp;(피드·릴스 이용 시 무상 제공)</td></tr>
-        <tr><td class="nw">상단 고정</td><td class="col-opt-val">3일 5만원 &nbsp;/&nbsp; 7일 10만원</td></tr>
-        <tr><td class="nw">쓰레드</td><td class="col-opt-val">5만원</td></tr>
-        <tr><td class="nw">당일 업로드</td><td class="col-opt-val">+10만원</td></tr>
-      </tbody>
-    </table>
-    <p class="notice">※ 부킹 후 취소 시 위약금 발생 &nbsp;—&nbsp; 3일 전 5만원 / 1일 전 10만원</p>
-
-    <hr>
-
-    <h3>2. 위클리성수</h3>
-    <p>매주 토요일 오전 한 주의 성수동 소식을 전하는 큐레이션 콘텐츠<br>
-    매주 3만명 이상 노출 / 브랜드 이미지 전달 가능</p>
-    <table>
-      <thead><tr><th style="text-align:left;">상품</th><th>가격</th><th>예시</th></tr></thead>
-      <tbody>
-        <tr><td class="nw">커버 스토리 (커버 이미지 + 첫 번째 소개) &nbsp;<span class="notice">1만 노출 보장</span></td><td class="col-price">20만원</td><td class="col-link"><a href="https://www.instagram.com/p/C6zr1hmv75W" target="_blank">링크</a></td></tr>
-        <tr><td class="nw">두 번째 소개 이후</td><td class="col-price">10만원</td><td class="col-link"><a href="https://www.instagram.com/p/DD0wyLQPZMS" target="_blank">링크</a></td></tr>
-        <tr><td class="nw">2주 연속 소개</td><td class="col-price">+5만원</td><td class="col-link"></td></tr>
-      </tbody>
-    </table>
-
-    <hr>
-
-    <h3>3. 브랜드 이슈</h3>
-    <p>티징, 브랜드 이벤트 소개 + 팝업 예고<br>
-    브랜드 영상/텍스트 사용, 성수동라이프 톤으로 재구성하여 발행<br>
-    팝업스토어 오픈 전 사전 마케팅에 효과적</p>
-    <table>
-      <thead><tr><th style="text-align:left;">상품</th><th>가격</th><th>예시</th></tr></thead>
-      <tbody>
-        <tr><td class="nw">인스타그램 피드 (이미지 최대 5장 / 텍스트 400~500자)</td><td class="col-price">25만원</td><td style="text-align:center; white-space:nowrap;"><a href="https://www.instagram.com/p/C0h6IEDvCvs/" target="_blank">링크1</a> &nbsp;<a href="https://www.instagram.com/p/DDa_nvlziTR" target="_blank">링크2</a></td></tr>
-      </tbody>
-    </table>
-
-    <hr>
-
-    <h3>SET 구성 &mdash; 채널은 다양하게, 할인율은 더 높게</h3>
-    <p class="notice" style="margin-bottom:8px;">방문 촬영 기준</p>
-    <div style="overflow-x:auto;">
-    <table class="set-table" style="min-width:580px;">
-      <thead>
-        <tr style="background:#f5f5f5;">
-          <th style="width:52px;">구분</th>
-          <th style="width:52px;">브랜드이슈</th>
-          <th style="width:44px;">피드</th>
-          <th style="width:44px;">릴스</th>
-          <th style="width:60px;">틱톡+유튜브</th>
-          <th style="width:60px;">위클리성수</th>
-          <th style="width:52px;">상단고정</th>
-          <th style="width:44px;">스토리</th>
-          <th style="width:44px;">쓰레드</th>
-          <th style="width:72px;">단가</th>
-          <th style="width:72px;">할인가</th>
-          <th style="width:44px;">할인율</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>SET1</strong></td><td>O</td><td></td><td></td><td></td><td>1주</td><td></td><td>2회</td><td>O</td>
-          <td style="text-align:right;"><span class="old">450,000</span></td><td style="text-align:right;" class="bold">300,000</td><td class="red">33%</td>
-        </tr>
-        <tr style="background:#fafafa;">
-          <td><strong>SET2</strong></td><td></td><td>O</td><td></td><td></td><td>1주</td><td></td><td>2회</td><td>O</td>
-          <td style="text-align:right;"><span class="old">650,000</span></td><td style="text-align:right;" class="bold">500,000</td><td class="red">23%</td>
-        </tr>
-        <tr>
-          <td><strong>SET3</strong></td><td>O</td><td></td><td>O</td><td></td><td>1주</td><td>3일</td><td>2회</td><td>O</td>
-          <td style="text-align:right;"><span class="old">1,050,000</span></td><td style="text-align:right;" class="bold">800,000</td><td class="red">30%</td>
-        </tr>
-        <tr style="background:#fafafa;">
-          <td><strong>SET4</strong></td><td></td><td>O</td><td>O</td><td>O</td><td>2주</td><td>7일</td><td>4회</td><td>O</td>
-          <td style="text-align:right;"><span class="old">1,550,000</span></td><td style="text-align:right;" class="bold">1,000,000</td><td class="red">35%</td>
-        </tr>
-      </tbody>
-    </table>
+    <div id="catalog-section">
+      <hr>
+      <div id="body-content" style="padding: 0 0 0 30px;"></div>
     </div>
-    <p class="notice" style="margin-top:6px;">※ 브랜드 이슈 : 브랜드 사진 활용해 피드 구성 &nbsp;|&nbsp; ※ 위클리성수 : 주간 팝업 큐레이션 소개</p>
-
-    <div style="margin-top:14px;">
-      <div class="set-item"><strong>SET 1 &middot; 브랜드 에셋 활용형</strong><br>브랜드이슈 + 위클리성수 + 스토리(2회) + 쓰레드 : 45만원 → <strong>30만원 (33% OFF)</strong></div>
-      <div class="set-item"><strong>SET 2 &middot; 사진 강조형</strong><br>피드(촬영) + 위클리성수 + 스토리(2회) + 쓰레드 : 65만원 → <strong>50만원 (23% OFF)</strong></div>
-      <div class="set-item"><strong>SET 3 &middot; 영상 강조형</strong><br>브랜드이슈 + 릴스(자막x) + 위클리성수 + 상단고정(3일) + 스토리(2회) + 쓰레드 : 105만원 → <strong>75만원 (29% OFF)</strong></div>
-      <div class="set-item"><strong>SET 4 &middot; 노출 최대형</strong><br>피드(촬영) + 릴스(자막x/틱톡·유튜브) + 위클리성수(2주) + 상단고정(7일) + 스토리(4회) + 쓰레드 : 155만원 → <strong>100만원 (35% OFF)</strong></div>
+    <div id="process-section">
+      <hr>
+      <p id="process-text" style="font-size:13px; color:#555; line-height:1.8;"></p>
+      <p id="closing-text" style="margin-top:14px;"></p>
     </div>
-
-    </div><!-- /indent -->
-
     <hr>
-
-    <p style="font-size:13px; color:#555; line-height:1.8;">
-      진행 프로세스 : 사전 가이드 전달 → 현장 촬영 → 시안 컨펌 → 업로드 → 비용 지급<br>
-      ※ 특정 카테고리의 경우, 일부 바터(브랜드 상품권·제품)로 운영 가능합니다.
-    </p>
-
-    <p style="margin-top:14px;">내용 보시고 궁금한 사항 있으시면 편하게 문의해 주세요. 감사합니다.</p>
-
-    <hr>
-
     <div>
       <div class="sig-handle">@sungsooodong</div>
-      <div class="sig-tagline">매일 새로운 성수동 이야기, <strong>성수동라이프</strong></div>
-      <div class="sig-contact">Editor. 장현경 &nbsp;/&nbsp; 010-6412-3365</div>
+      <div class="sig-tagline" id="sig-tagline"></div>
+      <div class="sig-contact">Editor. Jang Hyunkyung &nbsp;/&nbsp; 010-6412-3365</div>
     </div>
-
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-let dirType = 'in'; // 'in' = 인바운드, 'out' = 아웃바운드
+var dir = 'in';
+var lang = 'ko';
+var showCatalog = true;
+var showSet = true;
 
-function setType(t) {
-  dirType = t;
-  document.getElementById('btn-in').classList.toggle('active', t === 'in');
-  document.getElementById('btn-out').classList.toggle('active', t === 'out');
-  update();
+var feedLinks = [
+  'https://www.instagram.com/p/DLTq05MpCg6',
+  'https://www.instagram.com/p/DJsv_zDugzZ',
+  'https://www.instagram.com/p/DJdD2U6zK3m',
+  'https://www.instagram.com/p/DUeo8Z_kzCb'
+];
+var reelsLinks = [
+  'https://www.instagram.com/reel/DISoSTupE02/',
+  'https://www.instagram.com/reel/C0KwrY8PBGo/',
+  'https://www.instagram.com/reel/DK4VNpfJuoE/'
+];
+var weeklyLinks = [
+  'https://www.instagram.com/p/C6zr1hmv75W',
+  'https://www.instagram.com/p/DD0wyLQPZMS',
+  ''
+];
+var issueLinks = [
+  'https://www.instagram.com/p/C0h6IEDvCvs/',
+  'https://www.instagram.com/p/DDa_nvlziTR'
+];
+var setRows = [
+  ['SET1','O','','','','1wk','','x2','O','450,000','300,000','33%'],
+  ['SET2','','O','','','1wk','','x2','O','650,000','500,000','23%'],
+  ['SET3','O','','O','','1wk','3d','x2','O','1,050,000','800,000','30%'],
+  ['SET4','','O','O','O','2wk','7d','x4','O','1,550,000','1,000,000','35%']
+];
+var setRowsKo = [
+  ['SET1','O','','','','1주','','2회','O','450,000','300,000','33%'],
+  ['SET2','','O','','','1주','','2회','O','650,000','500,000','23%'],
+  ['SET3','O','','O','','1주','3일','2회','O','1,050,000','800,000','30%'],
+  ['SET4','','O','O','O','2주','7일','4회','O','1,550,000','1,000,000','35%']
+];
+
+var TX = {
+  ko: {
+    header: '여기만 채우세요 — 입력 후 본문이 자동 완성됩니다',
+    lblEmail: '수신자 이메일', lblCompany: '소속 (회사명)', lblName: '담당자 이름',
+    lblEvent: '행사명', lblNote: '특이사항', lblType: '문의 유형',
+    lblPreview: '미리보기', lblTo: '수신자',
+    btnTo: '수신자 복사', btnSubj: '제목 복사', btnBody: '본문 전체 복사', btnReset: '초기화',
+    tBtnTo: '수신자 복사', tBtnSubj: '제목 복사', tBtnBody: '본문 복사', copyBtn: '복사',
+    subjectSuffix: ' 홍보 제안드립니다.',
+    greetingWith: '안녕하세요, {co} {nm} 담당자님.<br>성수동라이프 장현경 에디터입니다.<br><br>',
+    greetingEmpty: '안녕하세요.<br>성수동라이프 장현경 에디터입니다.<br><br>',
+    inbound1: '먼저 연락주셔서 감사합니다.',
+    inbound2: '참고로, 성수동라이프는 인스타그램을 중심으로 성수동 소식을 콘텐츠로 제작 및 발행하고 있습니다. (팝업 / F&amp;B / 이벤트 등)<br>아래 운영 중인 상품 소개서 전달드리니 참고 부탁드립니다.',
+    outbound1: '이번에 성수에서 운영하시는 {ev} 홍보 제안차 메일 드립니다.<br>성수동라이프는 인스타그램을 중심으로 성수동 소식을 콘텐츠로 제작 및 발행하고 있습니다. (팝업 / F&amp;B / 이벤트 등)<br>아래 운영 중인 상품 소개서 전달드리니 참고 부탁드립니다.',
+    h1: '1. 리뷰 콘텐츠',
+    h1desc: '현장 방문하여 공간을 촬영하고 사진, 영상으로 소개<br>성수동라이프만의 시선으로 공간을 설명하며, 브랜드에서 원하는 특징을 담아냄<br>방문 후 1~2일 내로 업로드하여 빠른 홍보와 이슈 메이킹',
+    feed: '① 피드 (사진)',
+    reels: '② 릴스 (영상)',
+    reelsNote: '※ 평균 조회수 1만 / 최대 조회수 55만 (진로 팝업 / 무신사 퍼레이드)',
+    addOpt: '③ 추가 옵션',
+    thProd: '상품', thPrice: '가격', thEx: '예시',
+    feedRows: [['브랜드 제공 이미지','20만원'],['브랜드 제공 + 영상 혼합','25만원'],['방문 촬영','40만원'],['방문 촬영 + 영상 혼합','45만원']],
+    reelsRows: [['브랜드 제공 (제목+소제목 삽입)','30만원'],['방문 촬영 (제목+소제목 삽입)','50만원'],['방문 촬영 + 전체 자막 삽입','70만원']],
+    optRows: [['스토리','5만원/회 (피드·릴스 이용 시 무상 제공)'],['상단 고정','3일 5만원 / 7일 10만원'],['쓰레드','5만원'],['당일 업로드','+10만원']],
+    optNote: '※ 부킹 후 취소 시 위약금 발생 — 3일 전 5만원 / 1일 전 10만원',
+    h2: '2. 위클리성수',
+    h2desc: '매주 토요일 오전 한 주의 성수동 소식을 전하는 큐레이션 콘텐츠<br>매주 3만명 이상 노출 / 브랜드 이미지 전달 가능',
+    weeklyRows: [['커버 스토리 (커버 이미지 + 첫 번째 소개) <span class="notice">1만 노출 보장</span>','20만원'],['두 번째 소개 이후','10만원'],['2주 연속 소개','+5만원']],
+    h3: '3. 브랜드 이슈',
+    h3desc: '티징, 브랜드 이벤트 소개 + 팝업 예고<br>브랜드 영상/텍스트 사용, 성수동라이프 톤으로 재구성하여 발행<br>팝업스토어 오픈 전 사전 마케팅에 효과적',
+    issueRows: [['인스타그램 피드 (이미지 최대 5장 / 텍스트 400~500자)','25만원']],
+    setTitle: 'SET 구성 — 채널은 다양하게, 할인율은 더 높게',
+    setNote: '방문 촬영 기준',
+    setHeaders: ['구분','브랜드이슈','피드','릴스','틱톡+유튜브','위클리성수','상단고정','스토리','쓰레드','단가','할인가','할인율'],
+    setFootnote: '※ 브랜드 이슈 : 브랜드 사진 활용해 피드 구성 | ※ 위클리성수 : 주간 팝업 큐레이션 소개',
+    setItems: [
+      'SET 1 · 브랜드 에셋 활용형<br>브랜드이슈 + 위클리성수 + 스토리(2회) + 쓰레드 : 45만원 → <strong>30만원 (33% OFF)</strong>',
+      'SET 2 · 사진 강조형<br>피드(촬영) + 위클리성수 + 스토리(2회) + 쓰레드 : 65만원 → <strong>50만원 (23% OFF)</strong>',
+      'SET 3 · 영상 강조형<br>브랜드이슈 + 릴스(자막x) + 위클리성수 + 상단고정(3일) + 스토리(2회) + 쓰레드 : 105만원 → <strong>75만원 (29% OFF)</strong>',
+      'SET 4 · 노출 최대형<br>피드(촬영) + 릴스(자막x/틱톡·유튜브) + 위클리성수(2주) + 상단고정(7일) + 스토리(4회) + 쓰레드 : 155만원 → <strong>100만원 (35% OFF)</strong>'
+    ],
+    process: '진행 프로세스 : 사전 가이드 전달 → 현장 촬영 → 시안 컨펌 → 업로드 → 비용 지급<br>※ 특정 카테고리의 경우, 일부 바터(브랜드 상품권·제품)로 운영 가능합니다.',
+    closing: '내용 보시고 궁금한 사항 있으시면 편하게 문의해 주세요. 감사합니다.',
+    sigTagline: '매일 새로운 성수동 이야기, <strong>성수동라이프</strong>',
+    lk: '링크', lk2: '링크2',
+    toastCopy: '본문 복사 완료! Gmail 본문에 붙여넣기 하세요.',
+    toastNoEmail: '수신자 이메일을 입력해주세요.',
+    evPlaceholder: '[행사명]',
+    barterSubject: ' 협업 제안 관련 회신드립니다.',
+    barterBody: '우선 답변 감사드립니다.<br><br>1) 내부 사정상 유가 집행이 어려우시다면, 희망 견적이 있으실까요? 조율 가능하니 편하게 말씀주세요!<br><br>2) 혹은, 브랜드 제품 혹은 바우처를 제공하는 방식은 어떠실까요?<br>① 위클리성수 혹은 ② 브랜드 이슈 콘텐츠 제작으로 지원 가능할 것 같습니다.<br><br>① 위클리성수 : 한 주간의 성수동 소식을 전하는 큐레이션 콘텐츠 (토요일 오전 발행) - 10만원 상당<br><a href="https://www.instagram.com/p/DIm6ygSTKM0" target="_blank">https://www.instagram.com/p/DIm6ygSTKM0</a><br><br>② 브랜드 이슈 : 브랜드 이미지로 피드 업로드 (현장 사진 / 사전 포스터 등) - 25만원 상당<br><a href="https://www.instagram.com/p/DLTq05MpCg6" target="_blank">https://www.instagram.com/p/DLTq05MpCg6</a><br><br>위 제안 참고 부탁드리며,<br>긍정적인 검토 부탁드리겠습니다.'
+  },
+  en: {
+    header: 'Fill in the fields — body auto-generates below',
+    lblEmail: 'Recipient Email', lblCompany: 'Company', lblName: 'Contact Name',
+    lblEvent: 'Event / Campaign', lblNote: 'Special Note', lblType: 'Direction',
+    lblPreview: 'Preview', lblTo: 'To',
+    btnTo: 'Copy Email', btnSubj: 'Copy Subject', btnBody: 'Copy Full Body', btnReset: 'Reset',
+    tBtnTo: 'Copy Email', tBtnSubj: 'Copy Subject', tBtnBody: 'Copy Body', copyBtn: 'Copy',
+    subjectSuffix: ' — Collaboration Proposal from Sungsooodong',
+    greetingWith: 'Hello, {nm} from {co}.<br>This is Hyunkyung Jang, Editor at Sungsooodong.<br><br>',
+    greetingEmpty: 'Hello,<br>This is Hyunkyung Jang, Editor at Sungsooodong.<br><br>',
+    inbound1: 'Thank you for reaching out to us!',
+    inbound2: 'For your reference, Sungsooodong is an Instagram-based media channel covering daily stories from Seongsu-dong, Seoul — pop-ups, F&amp;B, events, and more.<br>Please find our content partnership packages below.',
+    outbound1: 'We are writing to propose a promotional collaboration for {ev} in Seongsu-dong.<br>Sungsooodong is an Instagram-based media channel covering daily stories from Seongsu-dong, Seoul — pop-ups, F&amp;B, events, and more.<br>Please find our content partnership packages below.',
+    h1: '1. Review Content',
+    h1desc: 'On-site visit to capture photos and videos of your space<br>Presented through Sungsooodong\'s editorial lens, highlighting your brand\'s key features<br>Published within 1–2 days for fast exposure and buzz',
+    feed: '① Feed (Photo)',
+    reels: '② Reels (Video)',
+    reelsNote: '※ Avg. views: 10K / Max views: 550K (Jinro Pop-up / Musinsa Parade)',
+    addOpt: '③ Add-on Options',
+    thProd: 'Package', thPrice: 'Price', thEx: 'Example',
+    feedRows: [['Brand-provided images','KRW 200,000'],['Brand-provided + video mix','KRW 250,000'],['On-site photo shoot','KRW 400,000'],['On-site photo + video mix','KRW 450,000']],
+    reelsRows: [['Brand-provided (title + subtitle)','KRW 300,000'],['On-site shoot (title + subtitle)','KRW 500,000'],['On-site shoot + full captions','KRW 700,000']],
+    optRows: [['Story','KRW 50,000/ea (Free with Feed or Reels)'],['Pin to Top','3 days KRW 50,000 / 7 days KRW 100,000'],['Threads','KRW 50,000'],['Same-day upload','+KRW 100,000']],
+    optNote: '※ Cancellation fee: KRW 50,000 (3 days prior) / KRW 100,000 (1 day prior)',
+    h2: '2. Weekly Sungsu',
+    h2desc: 'Saturday morning weekly curation of Seongsu-dong highlights<br>3,000+ weekly impressions / Brand image delivery available',
+    weeklyRows: [['Cover Story (cover image + first feature) <span class="notice">10K impressions guaranteed</span>','KRW 200,000'],['Second feature onward','KRW 100,000'],['2-week consecutive feature','+KRW 50,000']],
+    h3: '3. Brand Issue',
+    h3desc: 'Teaser, brand event intro + pop-up preview<br>Recreated in Sungsooodong editorial tone using brand assets<br>Ideal for pre-opening buzz',
+    issueRows: [['Instagram Feed (up to 5 images / 400–500 characters)','KRW 250,000']],
+    setTitle: 'Package Bundles — More Channels, Better Rates',
+    setNote: 'Based on on-site shoot',
+    setHeaders: ['Bundle','Brand Issue','Feed','Reels','TikTok+YT','Weekly','Pin','Story','Threads','List Price','Price','Disc.'],
+    setFootnote: '※ Brand Issue: feed post using brand-provided assets | ※ Weekly Sungsu: weekly pop-up curation',
+    setItems: [
+      'SET 1 · Brand Asset<br>Brand Issue + Weekly + Story(x2) + Threads : KRW 450,000 → <strong>KRW 300,000 (33% OFF)</strong>',
+      'SET 2 · Photo Focus<br>Feed(shoot) + Weekly + Story(x2) + Threads : KRW 650,000 → <strong>KRW 500,000 (23% OFF)</strong>',
+      'SET 3 · Video Focus<br>Brand Issue + Reels + Weekly + Pin(3d) + Story(x2) + Threads : KRW 1,050,000 → <strong>KRW 800,000 (30% OFF)</strong>',
+      'SET 4 · Max Exposure<br>Feed(shoot) + Reels(+TikTok/YT) + Weekly(2wk) + Pin(7d) + Story(x4) + Threads : KRW 1,550,000 → <strong>KRW 1,000,000 (35% OFF)</strong>'
+    ],
+    process: 'Process: Brief → On-site Shoot → Draft Approval → Upload → Payment<br>※ Barter arrangements (gift cards, products) available for select categories.',
+    closing: 'Feel free to reach out if you have any questions. Thank you!',
+    sigTagline: 'Daily stories from Seongsu-dong — <strong>Sungsooodong</strong>',
+    lk: 'link', lk2: 'link2',
+    toastCopy: 'Copied! Paste into Gmail body.',
+    toastNoEmail: 'Please enter recipient email.',
+    evPlaceholder: '[Event Name]',
+    barterSubject: ' — Re: Collaboration Proposal',
+    barterBody: 'Thank you for your reply!<br><br>1) If a paid arrangement is difficult at this time, do you have a budget in mind? We are open to discussion — feel free to share!<br><br>2) Alternatively, would a product/voucher barter arrangement work?<br>We could offer either ① Weekly Sungsu or ② Brand Issue content in exchange.<br><br>① Weekly Sungsu : Saturday morning curation of Seongsu-dong highlights — valued at KRW 100,000<br><a href="https://www.instagram.com/p/DIm6ygSTKM0" target="_blank">https://www.instagram.com/p/DIm6ygSTKM0</a><br><br>② Brand Issue : Feed post using brand-provided images — valued at KRW 250,000<br><a href="https://www.instagram.com/p/DLTq05MpCg6" target="_blank">https://www.instagram.com/p/DLTq05MpCg6</a><br><br>We hope you will consider this positively.'
+  }
+};
+
+function lnk(url, label) {
+  if (!url) return '';
+  return '<a href="' + url + '" target="_blank">' + label + '</a>';
+}
+
+function buildBody() {
+  var t = TX[lang];
+  var l = t.lk;
+  var l2 = t.lk2;
+  var rows = lang === 'ko' ? setRowsKo : setRows;
+
+  var feedPrices = [
+    document.getElementById('p-feed1') ? document.getElementById('p-feed1').value : t.feedRows[0][1],
+    document.getElementById('p-feed2') ? document.getElementById('p-feed2').value : t.feedRows[1][1],
+    document.getElementById('p-feed3') ? document.getElementById('p-feed3').value : t.feedRows[2][1],
+    document.getElementById('p-feed4') ? document.getElementById('p-feed4').value : t.feedRows[3][1]
+  ];
+  var feedTbl = '<table><thead><tr><th style="text-align:left;">' + t.thProd + '</th><th>' + t.thPrice + '</th><th>' + t.thEx + '</th></tr></thead><tbody>';
+  for (var i = 0; i < t.feedRows.length; i++) {
+    feedTbl += '<tr><td class="nw">' + t.feedRows[i][0] + '</td><td class="col-price">' + feedPrices[i] + '</td><td class="col-link">' + lnk(feedLinks[i], l) + '</td></tr>';
+  }
+  feedTbl += '</tbody></table>';
+
+  var reelsPrices = [
+    document.getElementById('p-reels1') ? document.getElementById('p-reels1').value : t.reelsRows[0][1],
+    document.getElementById('p-reels2') ? document.getElementById('p-reels2').value : t.reelsRows[1][1],
+    document.getElementById('p-reels3') ? document.getElementById('p-reels3').value : t.reelsRows[2][1]
+  ];
+  var reelsTbl = '<table><thead><tr><th style="text-align:left;">' + t.thProd + '</th><th>' + t.thPrice + '</th><th>' + t.thEx + '</th></tr></thead><tbody>';
+  for (var i = 0; i < t.reelsRows.length; i++) {
+    reelsTbl += '<tr><td class="nw">' + t.reelsRows[i][0] + '</td><td class="col-price">' + reelsPrices[i] + '</td><td class="col-link">' + lnk(reelsLinks[i], l) + '</td></tr>';
+  }
+  reelsTbl += '</tbody></table>';
+
+  var optTbl = '<table><tbody>';
+  for (var i = 0; i < t.optRows.length; i++) {
+    optTbl += '<tr><td class="nw">' + t.optRows[i][0] + '</td><td class="col-opt-val">' + t.optRows[i][1] + '</td></tr>';
+  }
+  optTbl += '</tbody></table>';
+
+  var weeklyTbl = '<table><thead><tr><th style="text-align:left;">' + t.thProd + '</th><th>' + t.thPrice + '</th><th>' + t.thEx + '</th></tr></thead><tbody>';
+  for (var i = 0; i < t.weeklyRows.length; i++) {
+    weeklyTbl += '<tr><td class="nw">' + t.weeklyRows[i][0] + '</td><td class="col-price">' + t.weeklyRows[i][1] + '</td><td class="col-link">' + lnk(weeklyLinks[i], l) + '</td></tr>';
+  }
+  weeklyTbl += '</tbody></table>';
+
+  var issueTbl = '<table><thead><tr><th style="text-align:left;">' + t.thProd + '</th><th>' + t.thPrice + '</th><th>' + t.thEx + '</th></tr></thead><tbody>';
+  issueTbl += '<tr><td class="nw">' + t.issueRows[0][0] + '</td><td class="col-price">' + t.issueRows[0][1] + '</td><td style="text-align:center;white-space:nowrap;">' + lnk(issueLinks[0], l) + ' &nbsp;' + lnk(issueLinks[1], l2) + '</td></tr>';
+  issueTbl += '</tbody></table>';
+
+  var widths = ['52px','52px','44px','44px','60px','60px','52px','44px','44px','72px','72px','44px'];
+  var setTbl = '<div style="overflow-x:auto;"><table class="set-tbl" style="min-width:580px;"><thead><tr style="background:#f5f5f5;">';
+  for (var i = 0; i < t.setHeaders.length; i++) {
+    setTbl += '<th style="width:' + widths[i] + ';">' + t.setHeaders[i] + '</th>';
+  }
+  setTbl += '</tr></thead><tbody>';
+  for (var i = 0; i < rows.length; i++) {
+    setTbl += i % 2 === 1 ? '<tr style="background:#fafafa;">' : '<tr>';
+    setTbl += '<td><strong>' + rows[i][0] + '</strong></td>';
+    for (var c = 1; c <= 8; c++) { setTbl += '<td>' + rows[i][c] + '</td>'; }
+    setTbl += '<td style="text-align:right;"><span class="old">' + rows[i][9] + '</span></td>';
+    setTbl += '<td style="text-align:right;" class="bold">' + rows[i][10] + '</td>';
+    setTbl += '<td class="red">' + rows[i][11] + '</td></tr>';
+  }
+  setTbl += '</tbody></table></div>';
+
+  var setItemsHtml = '';
+  for (var i = 0; i < t.setItems.length; i++) {
+    setItemsHtml += '<div class="set-item">' + t.setItems[i] + '</div>';
+  }
+
+  return '<h3>' + t.h1 + '</h3>'
+    + '<p>' + t.h1desc + '</p>'
+    + '<p style="margin-top:18px;"><strong>' + t.feed + '</strong></p>'
+    + feedTbl
+    + '<p style="margin-top:18px;"><strong>' + t.reels + '</strong><br><span class="notice">' + t.reelsNote + '</span></p>'
+    + reelsTbl
+    + '<p style="margin-top:18px;"><strong>' + t.addOpt + '</strong></p>'
+    + optTbl
+    + '<p class="notice">' + t.optNote + '</p>'
+    + '<hr>'
+    + '<h3>' + t.h2 + '</h3>'
+    + '<p>' + t.h2desc + '</p>'
+    + weeklyTbl
+    + '<hr>'
+    + '<h3>' + t.h3 + '</h3>'
+    + '<p>' + t.h3desc + '</p>'
+    + issueTbl
+    + (showSet ? '<hr>'
+    + '<h3>' + t.setTitle + '</h3>'
+    + '<p class="notice" style="margin-bottom:8px;">' + t.setNote + '</p>'
+    + setTbl
+    + '<p class="notice" style="margin-top:6px;">' + t.setFootnote + '</p>'
+    + '<div style="margin-top:14px;">' + setItemsHtml + '</div>' : '');
+}
+
+function updateLabels() {
+  var t = TX[lang];
+  document.getElementById('lbl-header').textContent = t.header;
+  document.getElementById('lbl-email').textContent = t.lblEmail;
+  document.getElementById('lbl-company').textContent = t.lblCompany;
+  document.getElementById('lbl-name').textContent = t.lblName;
+  document.getElementById('lbl-event').textContent = t.lblEvent;
+  document.getElementById('lbl-note').textContent = t.lblNote;
+  document.getElementById('lbl-type').textContent = t.lblType;
+  document.getElementById('lbl-preview').textContent = t.lblPreview;
+  document.getElementById('lbl-to').textContent = t.lblTo;
+  document.getElementById('lbl-btn-to').textContent = t.btnTo;
+  document.getElementById('lbl-btn-subj').textContent = t.btnSubj;
+  document.getElementById('lbl-btn-body').textContent = t.btnBody;
+  document.getElementById('lbl-btn-reset').textContent = t.btnReset;
+  document.getElementById('lbl-tbtn-to').textContent = t.tBtnTo;
+  document.getElementById('lbl-tbtn-subj').textContent = t.tBtnSubj;
+  document.getElementById('lbl-tbtn-body').textContent = t.tBtnBody;
+  document.getElementById('lbl-copy-to').textContent = t.copyBtn;
+  document.getElementById('lbl-copy-subj').textContent = t.copyBtn;
+  document.getElementById('sig-tagline').innerHTML = t.sigTagline;
+  document.getElementById('body-content').innerHTML = buildBody();
+  document.getElementById('process-text').innerHTML = t.process;
+  document.getElementById('closing-text').innerHTML = t.closing;
 }
 
 function update() {
-  const email   = v('f-email');
-  const company = v('f-company');
-  const name    = v('f-name');
-  const event   = v('f-event');
-  const note    = v('f-note');
-  const eventLabel = event || '[행사명]';
+  var t = TX[lang];
+  var email = gi('f-email');
+  var co    = gi('f-company');
+  var nm    = gi('f-name');
+  var ev    = gi('f-event') || t.evPlaceholder;
+  var note  = gi('f-note');
 
-  // 수신자
-  set('to-val', email || '—');
+  document.getElementById('to-val').innerHTML = email || '—';
+  var subjSuffix = (dir === 'barter') ? t.barterSubject : t.subjectSuffix;
+  document.getElementById('subject-val').innerHTML = '[성수동라이프] ' + ev + subjSuffix;
 
-  // 제목
-  set('subject-val', '[성수동라이프] ' + eventLabel + ' 홍보 제안드립니다.');
-
-  // 인사말
-  const greeting = (company || name)
-    ? '안녕하세요, ' + [company, name].filter(Boolean).join(' ') + ' 담당자님.<br>성수동라이프 장현경 에디터입니다.<br><br>'
-    : '안녕하세요.<br>성수동라이프 장현경 에디터입니다.<br><br>';
-
-  let body = greeting;
-
-  if (dirType === 'in') {
-    body += '먼저 연락주셔서 감사합니다.';
-    if (note) body += '<br>' + note;
-    body += '<br>'
-          + '참고로, 성수동라이프는 인스타그램을 중심으로 성수동 소식을 콘텐츠로 제작 및 발행하고 있습니다. (팝업 / F&amp;B / 이벤트 등)<br>'
-          + '아래 운영 중인 상품 소개서 전달드리니 참고 부탁드립니다.';
+  var greeting;
+  if (co || nm) {
+    // 직급 키워드가 포함되면 '담당자님' 생략
+    var titleKeywords = ['대리','과장','차장','부장','팀장','실장','이사','상무','전무','대표','사장','매니저','디렉터','manager','director','lead','head','ceo','coo','cmo'];
+    var nmLower = nm.toLowerCase();
+    var hasTitle = titleKeywords.some(function(k) { return nmLower.indexOf(k) !== -1; });
+    // 직급 포함 시 → "이름 직급님" / 이름만 입력 시 → "이름 담당자님"
+    var nmLabel = nm ? (hasTitle ? nm + '님' : nm + ' 담당자님') : '';
+    var coLabel = co || '';
+    if (lang === 'ko') {
+      var parts = [coLabel, nmLabel].filter(Boolean).join(' ');
+      greeting = '안녕하세요, ' + parts + '.<br>성수동라이프 장현경 에디터입니다.<br><br>';
+    } else {
+      var enParts = [nm ? nm : '', co ? 'from ' + co : ''].filter(Boolean).join(' ');
+      greeting = 'Hello, ' + enParts + '.<br>This is Hyunkyung Jang, Editor at Sungsooodong.<br><br>';
+    }
   } else {
-    body += '이번에 성수에서 운영하시는 ' + eventLabel + ' 홍보 제안차 메일 드립니다.<br>'
-          + '성수동라이프는 인스타그램을 중심으로 성수동 소식을 콘텐츠로 제작 및 발행하고 있습니다. (팝업 / F&amp;B / 이벤트 등)<br>'
-          + '아래 운영 중인 상품 소개서 전달드리니 참고 부탁드립니다.';
-    if (note) body += '<br>' + note;
+    greeting = t.greetingEmpty;
   }
 
+  var body = greeting;
+  if (dir === 'in') {
+    body += t.inbound1;
+    if (note) body += '<br>' + note;
+    body += '<br>' + t.inbound2;
+  } else if (dir === 'out') {
+    body += t.outbound1.replace('{ev}', ev);
+    if (note) body += '<br>' + note;
+  } else if (dir === 'barter') {
+    body += t.barterBody;
+    if (note) body += '<br>' + note;
+  } else if (dir === 'custom') {
+    var customText = document.getElementById('f-custom').value.trim();
+    body += customText ? customText.replace(/\n/g, '<br>') : '(여기에 내용을 입력하세요)';
+  }
   document.getElementById('intro-text').innerHTML = body;
+
+  // 소개서 영역 표시 여부
+  var showBody = (dir === 'in' || dir === 'out' || (dir === 'custom' && showCatalog));
+  document.getElementById('catalog-section').style.display = showBody ? '' : 'none';
+  document.getElementById('process-section').style.display = showBody ? '' : 'none';
 }
 
-function v(id) { return document.getElementById(id).value.trim(); }
-function set(id, val) { document.getElementById(id).innerHTML = val; }
+function setDir(d) {
+  dir = d;
+  document.getElementById('btn-in').classList.toggle('active', d === 'in');
+  document.getElementById('btn-out').classList.toggle('active', d === 'out');
+  document.getElementById('btn-barter').classList.toggle('active', d === 'barter');
+  document.getElementById('btn-custom').classList.toggle('active', d === 'custom');
+  document.getElementById('custom-row').style.display = (d === 'custom') ? '' : 'none';
+  document.getElementById('catalog-toggle-row').style.display = (d === 'custom') ? '' : 'none';
+  update();
+}
+
+function setCatalog(v) {
+  showCatalog = v;
+  document.getElementById('btn-catalog-on').classList.toggle('active', v === true);
+  document.getElementById('btn-catalog-off').classList.toggle('active', v === false);
+  update();
+}
+
+function setLang(l) {
+  lang = l;
+  document.getElementById('btn-ko').classList.toggle('active', l === 'ko');
+  document.getElementById('btn-en').classList.toggle('active', l === 'en');
+  updateLabels();
+  update();
+}
+
+function setSetVisible(v) {
+  showSet = v;
+  document.getElementById('btn-set-show').classList.toggle('active', v === true);
+  document.getElementById('btn-set-hide').classList.toggle('active', v === false);
+  updateLabels();
+  update();
+}
+
+function gi(id) { return document.getElementById(id).value.trim(); }
 
 function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.innerText = msg;
+  var t = document.getElementById('toast');
+  t.textContent = msg;
   t.style.display = 'block';
-  setTimeout(() => { t.style.display = 'none'; }, 2200);
+  setTimeout(function() { t.style.display = 'none'; }, 2200);
 }
 
 function copyTo() {
-  const text = document.getElementById('to-val').innerText;
-  if (text === '—') { showToast('수신자 이메일을 입력해주세요.'); return; }
+  var text = document.getElementById('to-val').innerText;
+  if (text === '—') { showToast(TX[lang].toastNoEmail); return; }
   navigator.clipboard.writeText(text)
-    .then(() => showToast('수신자 이메일 복사 완료!'))
-    .catch(() => fallback(text, '수신자 이메일 복사 완료!'));
+    .then(function() { showToast('✓ Copied!'); })
+    .catch(function() { fallback(text, '✓ Copied!'); });
 }
 
 function copySubject() {
-  const text = document.getElementById('subject-val').innerText;
+  var text = document.getElementById('subject-val').innerText;
   navigator.clipboard.writeText(text)
-    .then(() => showToast('제목 복사 완료!'))
-    .catch(() => fallback(text, '제목 복사 완료!'));
+    .then(function() { showToast('✓ Copied!'); })
+    .catch(function() { fallback(text, '✓ Copied!'); });
 }
 
 function copyBody() {
-  const el = document.getElementById('email-body');
-  const range = document.createRange();
+  var el = document.getElementById('email-body');
+  var range = document.createRange();
   range.selectNodeContents(el);
-  const sel = window.getSelection();
+  var sel = window.getSelection();
   sel.removeAllRanges();
   sel.addRange(range);
   try {
     document.execCommand('copy');
     sel.removeAllRanges();
-    showToast('본문 복사 완료! Gmail 본문에 붙여넣기 하세요.');
+    showToast(TX[lang].toastCopy);
   } catch(e) {
     showToast('복사 실패 — 직접 선택 후 복사해주세요.');
   }
 }
 
 function resetForm() {
-  ['f-email','f-company','f-name','f-event','f-note'].forEach(id => {
+  ['f-email','f-company','f-name','f-event','f-note','f-custom'].forEach(function(id) {
     document.getElementById(id).value = '';
   });
+  var defaults = {'p-feed1':'20만원','p-feed2':'25만원','p-feed3':'40만원','p-feed4':'45만원','p-reels1':'30만원','p-reels2':'50만원','p-reels3':'70만원'};
+  Object.keys(defaults).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.value = defaults[id];
+  });
+  setSetVisible(true);
   update();
 }
 
-window.onload = update;
-
 function fallback(text, msg) {
-  const el = document.createElement('textarea');
+  var el = document.createElement('textarea');
   el.value = text;
   el.style.cssText = 'position:fixed;opacity:0;top:0;left:0;';
   document.body.appendChild(el);
@@ -407,6 +652,11 @@ function fallback(text, msg) {
   catch(e) { showToast('복사 실패'); }
   document.body.removeChild(el);
 }
+
+window.onload = function() {
+  updateLabels();
+  update();
+};
 </script>
 </body>
 </html>
