@@ -162,11 +162,11 @@
   }
 
   /* ── 이메일 본문 ── */
-  .content { padding: 24px; font-family: Arial, sans-serif; }
-  p { margin-bottom: 12px; }
-  hr { border: none; border-top: 1px solid #e5e5ea; margin: 22px 0; }
-  h3 { font-size: 15px; font-weight: bold; margin: 18px 0 8px; color: #1a1a1a; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 10px; table-layout: auto; }
+  .content { padding: 24px; font-family: Arial, sans-serif; font-size: 13px; line-height: 1.8; }
+  p { margin-bottom: 14px; }
+  hr { border: none; border-top: 1px solid #e5e5ea; margin: 26px 0; }
+  h3 { font-size: 13px; font-weight: bold; margin: 20px 0 10px; color: #1a1a1a; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 14px; table-layout: auto; }
   th { background: #f5f5f5; border: 1px solid #ddd; padding: 7px 10px; white-space: nowrap; }
   td { border: 1px solid #ddd; padding: 7px 10px; vertical-align: middle; }
   td.nw { white-space: nowrap; }
@@ -178,7 +178,7 @@
   .old { text-decoration: line-through; color: #bbb; font-size: 12px; }
   .bold { font-weight: bold; }
   .red { color: #c0392b; font-weight: bold; }
-  .set-item { font-size: 13px; margin-bottom: 10px; line-height: 1.7; }
+  .set-item { font-size: 13px; margin-bottom: 14px; line-height: 1.8; }
   .set-tbl th, .set-tbl td { padding: 6px 7px; text-align: center; white-space: nowrap; font-size: 12px; }
   .sig-handle { font-family: Georgia, serif; font-size: 12px; font-weight: 700; color: #2e7d32; }
   .sig-tagline { font-family: Georgia, serif; font-size: 12px; color: #555; margin-top: 2px; }
@@ -192,7 +192,6 @@
 <div class="form-card">
   <div class="form-header">
     <div class="form-header-title">✉️ 성수동라이프 이메일 템플릿</div>
-    <div class="form-header-sub" id="lbl-header">여기만 채우세요 — 입력 후 본문이 자동 완성됩니다</div>
   </div>
   <div class="form-body">
 
@@ -205,12 +204,7 @@
         <button class="dir-btn" id="btn-barter" onclick="setDir('barter')">유가→바터</button>
         <button class="dir-btn" id="btn-custom" onclick="setDir('custom')">커스텀</button>
       </div>
-      <div style="display:flex; justify-content:flex-end; margin-top:10px;">
-        <div class="lang-seg">
-          <button class="lang-btn active" id="btn-ko" onclick="setLang('ko')">한국어</button>
-          <button class="lang-btn" id="btn-en" onclick="setLang('en')">English</button>
-        </div>
-      </div>
+
     </div>
     <div class="form-divider"></div>
 
@@ -302,11 +296,20 @@
           </div>
         </div>
 
-        <div style="display:flex; align-items:center; gap:12px;">
-          <div style="font-size:11px; font-weight:bold; color:#888; text-transform:uppercase; letter-spacing:0.5px;">SET 구성</div>
-          <div class="toggle-wrap" style="border-color:#2e7d32;">
-            <button class="toggle-btn active" id="btn-set-show" onclick="setSetVisible(true)">표시</button>
-            <button class="toggle-btn" id="btn-set-hide" onclick="setSetVisible(false)">숨김</button>
+        <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="font-size:11px; font-weight:bold; color:#888; text-transform:uppercase; letter-spacing:0.5px;">SET 구성</div>
+            <div class="toggle-wrap">
+              <button class="toggle-btn active" id="btn-set-show" onclick="setSetVisible(true)">표시</button>
+              <button class="toggle-btn" id="btn-set-hide" onclick="setSetVisible(false)">숨김</button>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="font-size:11px; font-weight:bold; color:#888; text-transform:uppercase; letter-spacing:0.5px;">Language</div>
+            <div class="lang-seg">
+              <button class="lang-btn active" id="btn-ko" onclick="setLang('ko')">한국어</button>
+              <button class="lang-btn" id="btn-en" onclick="setLang('en')">English</button>
+            </div>
           </div>
         </div>
 
@@ -314,30 +317,25 @@
     </details>
   </div>
   <div class="form-actions">
-    <button class="btn btn-outline-green" onclick="copyTo()">&#128231; <span id="lbl-btn-to">수신자 복사</span></button>
+    <button class="btn btn-outline-green" onclick="copyTo()"><span id="lbl-btn-to">수신자 복사</span></button>
     <button class="btn btn-outline-green" onclick="copySubject()"><span id="lbl-btn-subj">제목 복사</span></button>
-    <button class="btn btn-green btn-full" onclick="copyBody()">&#128203; <span id="lbl-btn-body">본문 전체 복사</span></button>
-    <button class="btn btn-gray" onclick="resetForm()"><span id="lbl-btn-reset">초기화</span></button>
+    <button class="btn btn-green btn-full" onclick="copyBody()"><span id="lbl-btn-body">본문 복사</span></button>
   </div>
 </div>
 
 <div class="outer">
   <div class="toolbar">
     <span class="toolbar-label" id="lbl-preview">미리보기</span>
-    <button class="tbtn" onclick="copyTo()"><span id="lbl-tbtn-to">수신자 복사</span></button>
-    <button class="tbtn" onclick="copySubject()"><span id="lbl-tbtn-subj">제목 복사</span></button>
-    <button class="tbtn tbtn-accent" onclick="copyBody()">&#128203; <span id="lbl-tbtn-body">본문 복사</span></button>
+
   </div>
   <div class="to-bar">
     <span class="to-label" id="lbl-to">수신자</span>
     <span class="to-val" id="to-val">—</span>
-    <button class="copy-to" onclick="copyTo()" id="lbl-copy-to">복사</button>
   </div>
   <div class="subject-bar">
     <span class="subject-val" id="subject-val">[Sungsooodong] —</span>
-    <button class="copy-subj" onclick="copySubject()" id="lbl-copy-subj">복사</button>
   </div>
-  <div class="content" id="email-body">
+  <div class="content" id="email-body" contenteditable="true" style="outline:none;">
     <p id="intro-text"></p>
     <div id="catalog-section">
       <hr>
@@ -352,7 +350,7 @@
     <div>
       <div class="sig-handle">@sungsooodong</div>
       <div class="sig-tagline" id="sig-tagline"></div>
-      <div class="sig-contact">Editor. Jang Hyunkyung &nbsp;/&nbsp; 010-6412-3365</div>
+      <div class="sig-contact">Editor. 장현경 &nbsp;/&nbsp; 010-6412-3365</div>
     </div>
   </div>
 </div>
@@ -404,7 +402,7 @@ var TX = {
     lblEmail: '수신자 이메일', lblCompany: '소속 (회사명)', lblName: '담당자 이름',
     lblEvent: '행사명', lblNote: '특이사항', lblType: '문의 유형',
     lblPreview: '미리보기', lblTo: '수신자',
-    btnTo: '수신자 복사', btnSubj: '제목 복사', btnBody: '본문 전체 복사', btnReset: '초기화',
+    btnTo: '수신자 복사', btnSubj: '제목 복사', btnBody: '본문 복사', btnReset: '초기화',
     tBtnTo: '수신자 복사', tBtnSubj: '제목 복사', tBtnBody: '본문 복사', copyBtn: '복사',
     subjectSuffix: ' 홍보 제안드립니다.',
     greetingWith: '안녕하세요, {co} {nm} 담당자님.<br>성수동라이프 장현경 에디터입니다.<br><br>',
@@ -421,7 +419,7 @@ var TX = {
     thProd: '상품', thPrice: '가격', thEx: '예시',
     feedRows: [['브랜드 제공 이미지','20만원'],['브랜드 제공 + 영상 혼합','25만원'],['방문 촬영','40만원'],['방문 촬영 + 영상 혼합','45만원']],
     reelsRows: [['브랜드 제공 (제목+소제목 삽입)','30만원'],['방문 촬영 (제목+소제목 삽입)','50만원'],['방문 촬영 + 전체 자막 삽입','70만원']],
-    optRows: [['스토리','5만원/회 (피드·릴스 이용 시 무상 제공)'],['상단 고정','3일 5만원 / 7일 10만원'],['쓰레드','5만원'],['당일 업로드','+10만원']],
+    optRows: [['스토리','5만원/회 (피드·릴스 이용 시 무상 제공)'],['상단 고정','3일 5만원 / 7일 10만원'],['쓰레드','5만원'],['당일 업로드','<span class="red">+10만원</span>']],
     optNote: '※ 부킹 후 취소 시 위약금 발생 — 3일 전 5만원 / 1일 전 10만원',
     h2: '2. 위클리성수',
     h2desc: '매주 토요일 오전 한 주의 성수동 소식을 전하는 큐레이션 콘텐츠<br>매주 3만명 이상 노출 / 브랜드 이미지 전달 가능',
@@ -439,7 +437,7 @@ var TX = {
       'SET 3 · 영상 강조형<br>브랜드이슈 + 릴스(자막x) + 위클리성수 + 상단고정(3일) + 스토리(2회) + 쓰레드 : 105만원 → <strong>75만원 (29% OFF)</strong>',
       'SET 4 · 노출 최대형<br>피드(촬영) + 릴스(자막x/틱톡·유튜브) + 위클리성수(2주) + 상단고정(7일) + 스토리(4회) + 쓰레드 : 155만원 → <strong>100만원 (35% OFF)</strong>'
     ],
-    process: '진행 프로세스 : 사전 가이드 전달 → 현장 촬영 → 시안 컨펌 → 업로드 → 비용 지급<br>※ 특정 카테고리의 경우, 일부 바터(브랜드 상품권·제품)로 운영 가능합니다.',
+    process: '※ 진행 프로세스 : 사전 가이드 전달 → 현장 촬영 → 시안 컨펌 → 업로드 → 비용 지급<br>※ 특정 카테고리의 경우, 일부 바터(브랜드 상품권·제품)로 운영 가능합니다.',
     closing: '내용 보시고 궁금한 사항 있으시면 편하게 문의해 주세요. 감사합니다.',
     sigTagline: '매일 새로운 성수동 이야기, <strong>성수동라이프</strong>',
     lk: '링크', lk2: '링크2',
@@ -454,7 +452,7 @@ var TX = {
     lblEmail: 'Recipient Email', lblCompany: 'Company', lblName: 'Contact Name',
     lblEvent: 'Event / Campaign', lblNote: 'Special Note', lblType: 'Direction',
     lblPreview: 'Preview', lblTo: 'To',
-    btnTo: 'Copy Email', btnSubj: 'Copy Subject', btnBody: 'Copy Full Body', btnReset: 'Reset',
+    btnTo: 'Copy Email', btnSubj: 'Copy Subject', btnBody: 'Copy Body', btnReset: 'Reset',
     tBtnTo: 'Copy Email', tBtnSubj: 'Copy Subject', tBtnBody: 'Copy Body', copyBtn: 'Copy',
     subjectSuffix: ' — Collaboration Proposal from Sungsooodong',
     greetingWith: 'Hello, {nm} from {co}.<br>This is Hyunkyung Jang, Editor at Sungsooodong.<br><br>',
@@ -471,7 +469,7 @@ var TX = {
     thProd: 'Package', thPrice: 'Price', thEx: 'Example',
     feedRows: [['Brand-provided images','KRW 200,000'],['Brand-provided + video mix','KRW 250,000'],['On-site photo shoot','KRW 400,000'],['On-site photo + video mix','KRW 450,000']],
     reelsRows: [['Brand-provided (title + subtitle)','KRW 300,000'],['On-site shoot (title + subtitle)','KRW 500,000'],['On-site shoot + full captions','KRW 700,000']],
-    optRows: [['Story','KRW 50,000/ea (Free with Feed or Reels)'],['Pin to Top','3 days KRW 50,000 / 7 days KRW 100,000'],['Threads','KRW 50,000'],['Same-day upload','+KRW 100,000']],
+    optRows: [['Story','KRW 50,000/ea (Free with Feed or Reels)'],['Pin to Top','3 days KRW 50,000 / 7 days KRW 100,000'],['Threads','KRW 50,000'],['Same-day upload','<span class="red">+KRW 100,000</span>']],
     optNote: '※ Cancellation fee: KRW 50,000 (3 days prior) / KRW 100,000 (1 day prior)',
     h2: '2. Weekly Sungsu',
     h2desc: 'Saturday morning weekly curation of Seongsu-dong highlights<br>3,000+ weekly impressions / Brand image delivery available',
@@ -489,7 +487,7 @@ var TX = {
       'SET 3 · Video Focus<br>Brand Issue + Reels + Weekly + Pin(3d) + Story(x2) + Threads : KRW 1,050,000 → <strong>KRW 800,000 (30% OFF)</strong>',
       'SET 4 · Max Exposure<br>Feed(shoot) + Reels(+TikTok/YT) + Weekly(2wk) + Pin(7d) + Story(x4) + Threads : KRW 1,550,000 → <strong>KRW 1,000,000 (35% OFF)</strong>'
     ],
-    process: 'Process: Brief → On-site Shoot → Draft Approval → Upload → Payment<br>※ Barter arrangements (gift cards, products) available for select categories.',
+    process: '※ Process: Brief → On-site Shoot → Draft Approval → Upload → Payment<br>※ Barter arrangements (gift cards, products) available for select categories.',
     closing: 'Feel free to reach out if you have any questions. Thank you!',
     sigTagline: 'Daily stories from Seongsu-dong — <strong>Sungsooodong</strong>',
     lk: 'link', lk2: 'link2',
@@ -599,7 +597,6 @@ function buildBody() {
 
 function updateLabels() {
   var t = TX[lang];
-  document.getElementById('lbl-header').textContent = t.header;
   document.getElementById('lbl-email').textContent = t.lblEmail;
   document.getElementById('lbl-company').textContent = t.lblCompany;
   document.getElementById('lbl-name').textContent = t.lblName;
@@ -611,12 +608,6 @@ function updateLabels() {
   document.getElementById('lbl-btn-to').textContent = t.btnTo;
   document.getElementById('lbl-btn-subj').textContent = t.btnSubj;
   document.getElementById('lbl-btn-body').textContent = t.btnBody;
-  document.getElementById('lbl-btn-reset').textContent = t.btnReset;
-  document.getElementById('lbl-tbtn-to').textContent = t.tBtnTo;
-  document.getElementById('lbl-tbtn-subj').textContent = t.tBtnSubj;
-  document.getElementById('lbl-tbtn-body').textContent = t.tBtnBody;
-  document.getElementById('lbl-copy-to').textContent = t.copyBtn;
-  document.getElementById('lbl-copy-subj').textContent = t.copyBtn;
   document.getElementById('sig-tagline').innerHTML = t.sigTagline;
   document.getElementById('body-content').innerHTML = buildBody();
   document.getElementById('process-text').innerHTML = t.process;
