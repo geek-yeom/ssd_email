@@ -632,8 +632,8 @@ function update() {
     var titleKeywords = ['대리','과장','차장','부장','팀장','실장','이사','상무','전무','대표','사장','매니저','디렉터','manager','director','lead','head','ceo','coo','cmo'];
     var nmLower = nm.toLowerCase();
     var hasTitle = titleKeywords.some(function(k) { return nmLower.indexOf(k) !== -1; });
-    // 직급 포함 시 → "이름 직급님" / 이름만 입력 시 → "이름 담당자님"
-    var nmLabel = nm ? (hasTitle ? nm + '님' : nm + ' 담당자님') : '';
+    // 이름 없음 → '담당자님' / 이름만 → '이름 담당자님' / 직함 포함 → '이름 직함님'
+    var nmLabel = nm ? (hasTitle ? nm + '님' : nm + ' 담당자님') : '담당자님';
     var coLabel = co || '';
     if (lang === 'ko') {
       var parts = [coLabel, nmLabel].filter(Boolean).join(' ');
