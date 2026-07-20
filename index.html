@@ -202,6 +202,7 @@
         <button class="dir-btn active" id="btn-in" onclick="setDir('in')">Inbound</button>
         <button class="dir-btn" id="btn-out" onclick="setDir('out')">Outbound</button>
         <button class="dir-btn" id="btn-barter" onclick="setDir('barter')">유가→바터</button>
+        <button class="dir-btn" id="btn-invite" onclick="setDir('invite')">단순 초대</button>
         <button class="dir-btn" id="btn-custom" onclick="setDir('custom')">커스텀</button>
       </div>
 
@@ -405,8 +406,8 @@ var TX = {
     btnTo: '수신자 복사', btnSubj: '제목 복사', btnBody: '본문 복사', btnReset: '초기화',
     tBtnTo: '수신자 복사', tBtnSubj: '제목 복사', tBtnBody: '본문 복사', copyBtn: '복사',
     subjectSuffix: ' 홍보 제안드립니다.',
-    greetingWith: '안녕하세요, {co} {nm} 담당자님.<br>성수동라이프 장현경 에디터입니다.<br><br>',
-    greetingEmpty: '안녕하세요.<br>성수동라이프 장현경 에디터입니다.<br><br>',
+    greetingWith: '<br>안녕하세요, {co} {nm} 담당자님.<br>성수동라이프 장현경 에디터입니다.<br><br>',
+    greetingEmpty: '<br>안녕하세요.<br>성수동라이프 장현경 에디터입니다.<br><br>',
     inbound1: '먼저 연락주셔서 감사합니다.',
     inbound2: '참고로, 성수동라이프는 인스타그램을 중심으로 성수동 소식을 콘텐츠로 제작 및 발행하고 있습니다. (팝업 / F&amp;B / 이벤트 등)<br>아래 운영 중인 상품 소개서 전달드리니 참고 부탁드립니다.',
     outbound1: '이번에 성수에서 운영하시는 {ev} 홍보 제안차 메일 드립니다.<br>성수동라이프는 인스타그램을 중심으로 성수동 소식을 콘텐츠로 제작 및 발행하고 있습니다. (팝업 / F&amp;B / 이벤트 등)<br>아래 운영 중인 상품 소개서 전달드리니 참고 부탁드립니다.',
@@ -444,6 +445,7 @@ var TX = {
     toastCopy: '본문 복사 완료! Gmail 본문에 붙여넣기 하세요.',
     toastNoEmail: '수신자 이메일을 입력해주세요.',
     evPlaceholder: '[행사명]',
+    inviteBody: '우선 연락주셔서 감사합니다.<br>단순 초대의 경우 브랜드 제품 혹은 바우처를 제공하는 방식은 어떠실까요?<br>① 위클리성수 혹은 ② 브랜드 이슈 콘텐츠 제작으로 지원 가능합니다.<br>성수동라이프에서 현장 방문이 아닌 브랜드에서 이미지 전달이 필요합니다. (간단한 스케치, 핸드폰 촬영컷도 가능)<br><br>① 위클리성수 : 한 주간의 성수동 소식을 전하는 큐레이션 콘텐츠 (토요일 오전 발행) - 10만원 상당<br><a href="https://www.instagram.com/p/DZgiUAkExpE/" target="_blank">https://www.instagram.com/p/DZgiUAkExpE/</a><br><br>② 브랜드 이슈 : 브랜드 이미지로 피드 업로드 (현장 사진 / 사전 포스터 등) - 25만원 상당<br><a href="https://www.instagram.com/p/DLTq05MpCg6" target="_blank">https://www.instagram.com/p/DLTq05MpCg6</a><br><br>위 제안 참고 부탁드리며,<br>긍정적인 검토 부탁드리겠습니다.',
     barterSubject: ' 협업 제안 관련 회신드립니다.',
     barterBody: '우선 답변 감사드립니다.<br><br>1) 내부 사정상 유가 집행이 어려우시다면, 희망 견적이 있으실까요? 조율 가능하니 편하게 말씀주세요!<br><br>2) 혹은, 브랜드 제품 혹은 바우처를 제공하는 방식은 어떠실까요?<br>① 위클리성수 혹은 ② 브랜드 이슈 콘텐츠 제작으로 지원 가능할 것 같습니다.<br><br>① 위클리성수 : 한 주간의 성수동 소식을 전하는 큐레이션 콘텐츠 (토요일 오전 발행) - 10만원 상당<br><a href="https://www.instagram.com/p/DIm6ygSTKM0" target="_blank">https://www.instagram.com/p/DIm6ygSTKM0</a><br><br>② 브랜드 이슈 : 브랜드 이미지로 피드 업로드 (현장 사진 / 사전 포스터 등) - 25만원 상당<br><a href="https://www.instagram.com/p/DLTq05MpCg6" target="_blank">https://www.instagram.com/p/DLTq05MpCg6</a><br><br>위 제안 참고 부탁드리며,<br>긍정적인 검토 부탁드리겠습니다.'
   },
@@ -455,8 +457,8 @@ var TX = {
     btnTo: 'Copy Email', btnSubj: 'Copy Subject', btnBody: 'Copy Body', btnReset: 'Reset',
     tBtnTo: 'Copy Email', tBtnSubj: 'Copy Subject', tBtnBody: 'Copy Body', copyBtn: 'Copy',
     subjectSuffix: ' — Collaboration Proposal from Sungsooodong',
-    greetingWith: 'Hello, {nm} from {co}.<br>This is Hyunkyung Jang, Editor at Sungsooodong.<br><br>',
-    greetingEmpty: 'Hello,<br>This is Hyunkyung Jang, Editor at Sungsooodong.<br><br>',
+    greetingWith: '<br>Hello, {nm} from {co}.<br>This is Hyunkyung Jang, Editor at Sungsooodong.<br><br>',
+    greetingEmpty: '<br>Hello,<br>This is Hyunkyung Jang, Editor at Sungsooodong.<br><br>',
     inbound1: 'Thank you for reaching out to us!',
     inbound2: 'For your reference, Sungsooodong is an Instagram-based media channel covering daily stories from Seongsu-dong, Seoul — pop-ups, F&amp;B, events, and more.<br>Please find our content partnership packages below.',
     outbound1: 'We are writing to propose a promotional collaboration for {ev} in Seongsu-dong.<br>Sungsooodong is an Instagram-based media channel covering daily stories from Seongsu-dong, Seoul — pop-ups, F&amp;B, events, and more.<br>Please find our content partnership packages below.',
@@ -637,10 +639,10 @@ function update() {
     var coLabel = co || '';
     if (lang === 'ko') {
       var parts = [coLabel, nmLabel].filter(Boolean).join(' ');
-      greeting = '안녕하세요, ' + parts + '.<br>성수동라이프 장현경 에디터입니다.<br><br>';
+      greeting = '<br>안녕하세요, ' + parts + '.<br>성수동라이프 장현경 에디터입니다.<br><br>';
     } else {
       var enParts = [nm ? nm : '', co ? 'from ' + co : ''].filter(Boolean).join(' ');
-      greeting = 'Hello, ' + enParts + '.<br>This is Hyunkyung Jang, Editor at Sungsooodong.<br><br>';
+      greeting = '<br>Hello, ' + enParts + '.<br>This is Hyunkyung Jang, Editor at Sungsooodong.<br><br>';
     }
   } else {
     greeting = t.greetingEmpty;
@@ -657,6 +659,9 @@ function update() {
   } else if (dir === 'barter') {
     body += t.barterBody;
     if (note) body += '<br>' + note;
+  } else if (dir === 'invite') {
+    body += t.inviteBody;
+    if (note) body += '<br>' + note;
   } else if (dir === 'custom') {
     var customText = document.getElementById('f-custom').value.trim();
     body += customText ? customText.replace(/\n/g, '<br>') : '(여기에 내용을 입력하세요)';
@@ -665,16 +670,17 @@ function update() {
 
   // 소개서 영역 표시 여부
   var showBody = (dir === 'in' || dir === 'out' || (dir === 'custom' && showCatalog));
+  if (dir === 'invite') showBody = false;
   document.getElementById('catalog-section').style.display = showBody ? '' : 'none';
   document.getElementById('process-section').style.display = showBody ? '' : 'none';
 }
 
 function setDir(d) {
   dir = d;
-  ['btn-in','btn-out','btn-barter','btn-custom'].forEach(function(id) {
+  ['btn-in','btn-out','btn-barter','btn-invite','btn-custom'].forEach(function(id) {
     document.getElementById(id).classList.remove('active');
   });
-  document.getElementById('btn-' + (d === 'in' ? 'in' : d === 'out' ? 'out' : d === 'barter' ? 'barter' : 'custom')).classList.add('active');
+  document.getElementById('btn-' + (d === 'in' ? 'in' : d === 'out' ? 'out' : d === 'barter' ? 'barter' : d === 'invite' ? 'invite' : 'custom')).classList.add('active');
   document.getElementById('custom-row').style.display = (d === 'custom') ? '' : 'none';
   document.getElementById('catalog-toggle-row').style.display = (d === 'custom') ? '' : 'none';
   update();
