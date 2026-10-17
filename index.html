@@ -260,20 +260,24 @@
           <div style="font-size:11px; font-weight:bold; color:#888; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">① 피드 가격</div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
             <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px;">
-              <label style="font-size:11px;color:#aaa;">브랜드 제공</label>
+              <label style="font-size:11px;color:#aaa;">브랜드 제공 (이미지 *최대 5장)</label>
               <input type="text" id="p-feed1" value="20만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
             </div>
             <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px;">
-              <label style="font-size:11px;color:#aaa;">브랜드+영상혼합</label>
-              <input type="text" id="p-feed2" value="25만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
+              <label style="font-size:11px;color:#aaa;">브랜드 제공 (이미지 + 영상 혼합)</label>
+              <input type="text" id="p-feed2" value="30만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
             </div>
             <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px;">
               <label style="font-size:11px;color:#aaa;">방문 촬영</label>
-              <input type="text" id="p-feed3" value="40만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
+              <input type="text" id="p-feed3" value="50만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
             </div>
             <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px;">
-              <label style="font-size:11px;color:#aaa;">방문+영상혼합</label>
-              <input type="text" id="p-feed4" value="45만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
+              <label style="font-size:11px;color:#aaa;">방문 촬영 (이미지에 텍스트 설명)</label>
+              <input type="text" id="p-feed4" value="60만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
+            </div>
+            <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px;">
+              <label style="font-size:11px;color:#aaa;">방문 촬영 (이미지 + 10초 영상 혼합)</label>
+              <input type="text" id="p-feed5" value="70만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
             </div>
           </div>
         </div>
@@ -282,16 +286,16 @@
           <div style="font-size:11px; font-weight:bold; color:#888; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">② 릴스 가격</div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
             <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px;">
-              <label style="font-size:11px;color:#aaa;">브랜드 제공</label>
-              <input type="text" id="p-reels1" value="30만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
+              <label style="font-size:11px;color:#aaa;">브랜드 제공 영상</label>
+              <input type="text" id="p-reels1" value="50만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
             </div>
             <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px;">
-              <label style="font-size:11px;color:#aaa;">방문 촬영</label>
-              <input type="text" id="p-reels2" value="50만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
+              <label style="font-size:11px;color:#aaa;">방문 촬영 + 제목 삽입</label>
+              <input type="text" id="p-reels2" value="80만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
             </div>
             <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px;">
-              <label style="font-size:11px;color:#aaa;">방문+전체자막</label>
-              <input type="text" id="p-reels3" value="70만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
+              <label style="font-size:11px;color:#aaa;">방문 촬영 + 전체 자막</label>
+              <input type="text" id="p-reels3" value="90만원" oninput="updateLabels(); update();" style="border:1px solid #ddd;border-radius:5px;padding:5px 8px;font-size:13px;width:100%;">
             </div>
           </div>
         </div>
@@ -363,15 +367,10 @@ var lang = 'ko';
 var showCatalog = true;
 var showSet = true;
 
-var feedLinks = [
-  'https://www.instagram.com/p/DLTq05MpCg6',
-  'https://www.instagram.com/p/DJsv_zDugzZ',
-  'https://www.instagram.com/p/DJdD2U6zK3m',
-  'https://www.instagram.com/p/DUeo8Z_kzCb'
-];
+var feedLinks = ["https://www.instagram.com/p/DLTq05MpCg6", "https://www.instagram.com/p/DJsv_zDugzZ", "https://www.instagram.com/p/DJdD2U6zK3m", "https://www.instagram.com/p/DeA9B_3E4fo/?img_index=1", "https://www.instagram.com/p/DeeLJqiE1ni"];
 var reelsLinks = [
   'https://www.instagram.com/reel/DISoSTupE02/',
-  'https://www.instagram.com/reel/C0KwrY8PBGo/',
+  'https://www.instagram.com/reel/DWs9No4kymd/',
   'https://www.instagram.com/reel/DK4VNpfJuoE/'
 ];
 var weeklyLinks = [
@@ -383,18 +382,8 @@ var issueLinks = [
   'https://www.instagram.com/p/C0h6IEDvCvs/',
   'https://www.instagram.com/p/DDa_nvlziTR'
 ];
-var setRows = [
-  ['SET1','O','','','','1wk','','x2','O','450,000','300,000','33%'],
-  ['SET2','','O','','','1wk','','x2','O','650,000','500,000','23%'],
-  ['SET3','O','','O','','1wk','3d','x2','O','1,050,000','800,000','30%'],
-  ['SET4','','O','O','O','2wk','7d','x4','O','1,550,000','1,000,000','35%']
-];
-var setRowsKo = [
-  ['SET1','O','','','','1주','','2회','O','450,000','300,000','33%'],
-  ['SET2','','O','','','1주','','2회','O','650,000','500,000','23%'],
-  ['SET3','O','','O','','1주','3일','2회','O','1,050,000','800,000','30%'],
-  ['SET4','','O','O','O','2주','7일','4회','O','1,550,000','1,000,000','35%']
-];
+var setRows = [["SET1", "", "O", "", "", "1wk", "3d", "2d", "O", "750,000", "600,000", "20%"], ["SET2", "", "O", "", "O", "1wk", "7d", "2d", "O", "1,350,000", "1,000,000", "26%"], ["SET3", "O", "", "O", "", "2wk", "7d", "2d", "O", "1,850,000", "1,300,000", "30%"]];
+var setRowsKo = [["SET1", "", "O", "", "", "1주", "3일", "2일", "O", "750,000", "600,000", "20%"], ["SET2", "", "O", "", "O", "1주", "7일", "2일", "O", "1,350,000", "1,000,000", "26%"], ["SET3", "O", "", "O", "", "2주", "7일", "2일", "O", "1,850,000", "1,300,000", "30%"]];
 
 var TX = {
   ko: {
@@ -411,15 +400,15 @@ var TX = {
     inbound2: '참고로, 성수동라이프는 인스타그램을 중심으로 성수동 소식을 콘텐츠로 제작 및 발행하고 있습니다. (팝업 / F&amp;B / 이벤트 등)<br>아래 운영 중인 상품 소개서 전달드리니 참고 부탁드립니다.',
     outbound1: '이번에 성수에서 운영하시는 {ev} 홍보 제안차 메일 드립니다.<br>성수동라이프는 인스타그램을 중심으로 성수동 소식을 콘텐츠로 제작 및 발행하고 있습니다. (팝업 / F&amp;B / 이벤트 등)<br>아래 운영 중인 상품 소개서 전달드리니 참고 부탁드립니다.',
     h1: '1. 리뷰 콘텐츠',
-    h1desc: '현장 방문하여 공간을 촬영하고 사진, 영상으로 소개<br>성수동라이프만의 시선으로 공간을 설명하며, 브랜드에서 원하는 특징을 담아냄<br>방문 후 1~2일 내로 업로드하여 빠른 홍보와 이슈 메이킹',
+    h1desc: '현장 방문하여 공간을 촬영하고 사진, 영상으로 소개<br>성수동라이프만의 시선으로 공간을 설명하며, 브랜드에서 원하는 특징을 담아냄<br>각 상품의 예시 콘텐츠는 링크에서 확인 가능',
     feed: '① 피드 (사진)',
     reels: '② 릴스 (영상)',
     reelsNote: '※ 평균 조회수 1만 / 최대 조회수 55만 (진로 팝업 / 무신사 퍼레이드)',
     addOpt: '③ 추가 옵션',
     thProd: '상품', thPrice: '가격', thEx: '예시',
-    feedRows: [['브랜드 제공 이미지','20만원'],['브랜드 제공 + 영상 혼합','25만원'],['방문 촬영','40만원'],['방문 촬영 + 영상 혼합','45만원']],
-    reelsRows: [['브랜드 제공 (제목+소제목 삽입)','30만원'],['방문 촬영 (제목+소제목 삽입)','50만원'],['방문 촬영 + 전체 자막 삽입','70만원']],
-    optRows: [['스토리','5만원/회 (피드·릴스 이용 시 무상 제공)'],['상단 고정','3일 5만원 / 7일 10만원'],['쓰레드','5만원'],['당일 업로드','<span class="red">+10만원</span>']],
+    feedRows: [["브랜드 제공 (이미지 *최대 5장)", "20만원"], ["브랜드 제공 (이미지 + 영상 혼합)", "30만원"], ["방문 촬영", "50만원"], ["방문 촬영 (이미지에 텍스트 설명)", "60만원"], ["방문 촬영 (이미지 + 10초 영상 혼합)", "70만원"]],
+    reelsRows: [["브랜드 제공 영상", "50만원"], ["방문 촬영 + 제목 삽입", "80만원"], ["방문 촬영 + 전체 자막", "90만원"]],
+    optRows: [["당일 업로드", "<span class=\"red\">+10만원</span>"], ["2차 활용 (SNS 한정)", "10만원"], ["전체 촬영 원본 제공", "10만원"], ["스토리", "5만원/회 (피드·릴스 이용 시 무상 제공)"], ["상단 고정", "3일 5만원 / 7일 10만원"], ["쓰레드", "5만원"]],
     optNote: '※ 부킹 후 취소 시 위약금 발생 — 3일 전 5만원 / 1일 전 10만원',
     h2: '2. 위클리성수',
     h2desc: '매주 토요일 오전 한 주의 성수동 소식을 전하는 큐레이션 콘텐츠<br>매주 3만명 이상 노출 / 브랜드 이미지 전달 가능',
@@ -429,14 +418,9 @@ var TX = {
     issueRows: [['인스타그램 피드 (이미지 최대 5장 / 텍스트 400~500자)','25만원']],
     setTitle: 'SET 구성 — 채널은 다양하게, 할인율은 더 높게',
     setNote: '방문 촬영 기준',
-    setHeaders: ['구분','브랜드이슈','피드','릴스','틱톡+유튜브','위클리성수','상단고정','스토리','쓰레드','단가','할인가','할인율'],
+    setHeaders: ['구분','브랜드<br>이슈','피드','릴스','틱톡<br>유튜브','위클리<br>성수','상단<br>고정','스토리','쓰레드','단가','할인가','할인율'],
     setFootnote: '※ 브랜드 이슈 : 브랜드 사진 활용해 피드 구성 | ※ 위클리성수 : 주간 팝업 큐레이션 소개',
-    setItems: [
-      'SET 1 · 브랜드 에셋 활용형<br>브랜드이슈 + 위클리성수 + 스토리(2회) + 쓰레드 : 45만원 → <strong>30만원 (33% OFF)</strong>',
-      'SET 2 · 사진 강조형<br>피드(촬영) + 위클리성수 + 스토리(2회) + 쓰레드 : 65만원 → <strong>50만원 (23% OFF)</strong>',
-      'SET 3 · 영상 강조형<br>브랜드이슈 + 릴스(자막x) + 위클리성수 + 상단고정(3일) + 스토리(2회) + 쓰레드 : 105만원 → <strong>75만원 (29% OFF)</strong>',
-      'SET 4 · 노출 최대형<br>피드(촬영) + 릴스(자막x/틱톡·유튜브) + 위클리성수(2주) + 상단고정(7일) + 스토리(4회) + 쓰레드 : 155만원 → <strong>100만원 (35% OFF)</strong>'
-    ],
+    setItems: ["SET 1 · 피드 기본형<br>피드 + 위클리성수(1주) + 상단고정(3일) + 스토리(2일) + 쓰레드 : 75만원 → <strong>60만원 (20% OFF)</strong>", "SET 2 · 멀티채널형<br>피드 + 틱톡·유튜브 + 위클리성수(1주) + 상단고정(7일) + 스토리(2일) + 쓰레드 : 135만원 → <strong>100만원 (26% OFF)</strong>", "SET 3 · 영상 강조형<br>브랜드이슈 + 릴스 + 위클리성수(2주) + 상단고정(7일) + 스토리(2일) + 쓰레드 : 185만원 → <strong>130만원 (30% OFF)</strong>"],
     process: '※ 진행 프로세스 : 사전 가이드 전달 → 현장 촬영 → 시안 컨펌 → 업로드 → 비용 지급<br>※ 특정 카테고리의 경우, 일부 바터(브랜드 상품권·제품)로 운영 가능합니다.',
     closing: '내용 보시고 궁금한 사항 있으시면 편하게 문의해 주세요. 감사합니다.',
     sigTagline: '매일 새로운 성수동 이야기, <strong>성수동라이프</strong>',
@@ -461,15 +445,15 @@ var TX = {
     inbound2: 'For your reference, Sungsooodong is an Instagram-based media channel covering daily stories from Seongsu-dong, Seoul — pop-ups, F&amp;B, events, and more.<br>Please find our content partnership packages below.',
     outbound1: 'We are writing to propose a promotional collaboration for {ev} in Seongsu-dong.<br>Sungsooodong is an Instagram-based media channel covering daily stories from Seongsu-dong, Seoul — pop-ups, F&amp;B, events, and more.<br>Please find our content partnership packages below.',
     h1: '1. Review Content',
-    h1desc: 'On-site visit to capture photos and videos of your space<br>Presented through Sungsooodong\'s editorial lens, highlighting your brand\'s key features<br>Published within 1–2 days for fast exposure and buzz',
+    h1desc: 'On-site visit to capture photos and videos of your space<br>Presented through Sungsooodong\'s editorial lens, highlighting your brand\'s key features<br>View example content for each package via the links',
     feed: '① Feed (Photo)',
     reels: '② Reels (Video)',
     reelsNote: '※ Avg. views: 10K / Max views: 550K (Jinro Pop-up / Musinsa Parade)',
     addOpt: '③ Add-on Options',
     thProd: 'Package', thPrice: 'Price', thEx: 'Example',
-    feedRows: [['Brand-provided images','KRW 200,000'],['Brand-provided + video mix','KRW 250,000'],['On-site photo shoot','KRW 400,000'],['On-site photo + video mix','KRW 450,000']],
-    reelsRows: [['Brand-provided (title + subtitle)','KRW 300,000'],['On-site shoot (title + subtitle)','KRW 500,000'],['On-site shoot + full captions','KRW 700,000']],
-    optRows: [['Story','KRW 50,000/ea (Free with Feed or Reels)'],['Pin to Top','3 days KRW 50,000 / 7 days KRW 100,000'],['Threads','KRW 50,000'],['Same-day upload','<span class="red">+KRW 100,000</span>']],
+    feedRows: [["Brand-provided images (up to 5)", "KRW 200,000"], ["Brand-provided images + video mix", "KRW 300,000"], ["On-site photo shoot", "KRW 500,000"], ["On-site shoot (text descriptions on images)", "KRW 600,000"], ["On-site shoot (images + 10-second video mix)", "KRW 700,000"]],
+    reelsRows: [["Brand-provided video", "KRW 500,000"], ["On-site shoot + title", "KRW 800,000"], ["On-site shoot + full captions", "KRW 900,000"]],
+    optRows: [["Same-day upload", "<span class=\"red\">+KRW 100,000</span>"], ["Secondary usage (social media only)", "KRW 100,000"], ["All original shoot files", "KRW 100,000"], ["Story", "KRW 50,000/ea (Free with Feed or Reels)"], ["Pin to Top", "3 days KRW 50,000 / 7 days KRW 100,000"], ["Threads", "KRW 50,000"]],
     optNote: '※ Cancellation fee: KRW 50,000 (3 days prior) / KRW 100,000 (1 day prior)',
     h2: '2. Weekly Sungsu',
     h2desc: 'Saturday morning weekly curation of Seongsu-dong highlights<br>3,000+ weekly impressions / Brand image delivery available',
@@ -479,14 +463,9 @@ var TX = {
     issueRows: [['Instagram Feed (up to 5 images / 400–500 characters)','KRW 250,000']],
     setTitle: 'Package Bundles — More Channels, Better Rates',
     setNote: 'Based on on-site shoot',
-    setHeaders: ['Bundle','Brand Issue','Feed','Reels','TikTok+YT','Weekly','Pin','Story','Threads','List Price','Price','Disc.'],
+    setHeaders: ['Bundle','Brand<br>Issue','Feed','Reels','TikTok<br>YouTube','Weekly','Pin','Story','Threads','List Price','Price','Disc.'],
     setFootnote: '※ Brand Issue: feed post using brand-provided assets | ※ Weekly Sungsu: weekly pop-up curation',
-    setItems: [
-      'SET 1 · Brand Asset<br>Brand Issue + Weekly + Story(x2) + Threads : KRW 450,000 → <strong>KRW 300,000 (33% OFF)</strong>',
-      'SET 2 · Photo Focus<br>Feed(shoot) + Weekly + Story(x2) + Threads : KRW 650,000 → <strong>KRW 500,000 (23% OFF)</strong>',
-      'SET 3 · Video Focus<br>Brand Issue + Reels + Weekly + Pin(3d) + Story(x2) + Threads : KRW 1,050,000 → <strong>KRW 800,000 (30% OFF)</strong>',
-      'SET 4 · Max Exposure<br>Feed(shoot) + Reels(+TikTok/YT) + Weekly(2wk) + Pin(7d) + Story(x4) + Threads : KRW 1,550,000 → <strong>KRW 1,000,000 (35% OFF)</strong>'
-    ],
+    setItems: ["SET 1 · Feed Essentials<br>Feed + Weekly(1wk) + Pin(3d) + Story(2d) + Threads : KRW 750,000 → <strong>KRW 600,000 (20% OFF)</strong>", "SET 2 · Multi-channel<br>Feed + TikTok/YouTube + Weekly(1wk) + Pin(7d) + Story(2d) + Threads : KRW 1,350,000 → <strong>KRW 1,000,000 (26% OFF)</strong>", "SET 3 · Video Focus<br>Brand Issue + Reels + Weekly(2wk) + Pin(7d) + Story(2d) + Threads : KRW 1,850,000 → <strong>KRW 1,300,000 (30% OFF)</strong>"],
     process: '※ Process: Brief → On-site Shoot → Draft Approval → Upload → Payment<br>※ Barter arrangements (gift cards, products) available for select categories.',
     closing: 'Feel free to reach out if you have any questions. Thank you!',
     sigTagline: 'Daily stories from Seongsu-dong — <strong>Sungsooodong</strong>',
@@ -524,7 +503,8 @@ function buildBody() {
     document.getElementById('p-feed1') ? document.getElementById('p-feed1').value : t.feedRows[0][1],
     document.getElementById('p-feed2') ? document.getElementById('p-feed2').value : t.feedRows[1][1],
     document.getElementById('p-feed3') ? document.getElementById('p-feed3').value : t.feedRows[2][1],
-    document.getElementById('p-feed4') ? document.getElementById('p-feed4').value : t.feedRows[3][1]
+    document.getElementById('p-feed4') ? document.getElementById('p-feed4').value : t.feedRows[3][1],
+    document.getElementById('p-feed5') ? document.getElementById('p-feed5').value : t.feedRows[4][1]
   ];
   var feedTbl = '<table><thead><tr><th style="text-align:left;">' + t.thProd + '</th><th>' + t.thPrice + '</th><th>' + t.thEx + '</th></tr></thead><tbody>';
   for (var i = 0; i < t.feedRows.length; i++) {
@@ -753,7 +733,7 @@ function resetForm() {
   ['f-email','f-company','f-name','f-event','f-note','f-custom'].forEach(function(id) {
     document.getElementById(id).value = '';
   });
-  var defaults = {'p-feed1':'20만원','p-feed2':'25만원','p-feed3':'40만원','p-feed4':'45만원','p-reels1':'30만원','p-reels2':'50만원','p-reels3':'70만원'};
+  var defaults = {"p-feed1": "20만원", "p-feed2": "30만원", "p-feed3": "50만원", "p-feed4": "60만원", "p-feed5": "70만원", "p-reels1": "50만원", "p-reels2": "80만원", "p-reels3": "90만원"};
   Object.keys(defaults).forEach(function(id) {
     var el = document.getElementById(id);
     if (el) el.value = defaults[id];
