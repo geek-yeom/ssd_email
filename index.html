@@ -253,7 +253,7 @@
   </div>
   <div style="padding: 0 16px 12px;">
     <details style="font-size:13px; color:#555;">
-      <summary style="cursor:pointer; font-weight:bold; color:#2e7d32; padding:6px 0;">&#9881;&#65039; 고급 옵션 (가격 수정 / SET 숨기기)</summary>
+      <summary style="cursor:pointer; font-weight:bold; color:#2e7d32; padding:6px 0;">&#9881;&#65039; 고급 옵션 (가격 수정 / SET 숨기기 / 할인 적용)</summary>
       <div style="margin-top:12px; display:flex; flex-direction:column; gap:12px;">
 
         <div>
@@ -306,6 +306,13 @@
             <div class="toggle-wrap">
               <button class="toggle-btn active" id="btn-set-show" onclick="setSetVisible(true)">표시</button>
               <button class="toggle-btn" id="btn-set-hide" onclick="setSetVisible(false)">숨김</button>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="font-size:11px; font-weight:bold; color:#888; text-transform:uppercase; letter-spacing:0.5px;">할인 적용</div>
+            <div class="toggle-wrap">
+              <button class="toggle-btn" id="btn-discount-show" onclick="setDiscountVisible(true)">표시</button>
+              <button class="toggle-btn active" id="btn-discount-hide" onclick="setDiscountVisible(false)">숨김</button>
             </div>
           </div>
           <div style="display:flex; align-items:center; gap:10px;">
@@ -366,6 +373,7 @@ var dir = 'in';
 var lang = 'ko';
 var showCatalog = true;
 var showSet = true;
+var showDiscount = false;
 
 var feedLinks = ["https://www.instagram.com/p/DLTq05MpCg6", "https://www.instagram.com/p/DJsv_zDugzZ", "https://www.instagram.com/p/DJdD2U6zK3m", "https://www.instagram.com/p/DeA9B_3E4fo/?img_index=1", "https://www.instagram.com/p/DeeLJqiE1ni"];
 var reelsLinks = [
@@ -647,6 +655,11 @@ function update() {
     var customText = document.getElementById('f-custom').value.trim();
     body += customText ? customText.replace(/\n/g, '<br>') : '(여기에 내용을 입력하세요)';
   }
+  if (showDiscount) {
+    body += '<br><br>' + (lang === 'ko'
+      ? '참고로, 요청해주신 <strong>F&amp;B 매장</strong>의 경우 일반 성수 팝업과 성격이 다른 상황을 감안하여<br>아래 제작 비용에서 20% 할인 적용해드리고 있습니다.<br>보시고 함께하고 싶은 내용이 있으면 편하게 말씀주시기 바랍니다.'
+      : 'As your F&amp;B project differs from a typical Seongsu pop-up, we are offering a 20% discount on the production fees below.<br>Please feel free to let us know which options you would like to explore together.');
+  }
   document.getElementById('intro-text').innerHTML = body;
 
   // 소개서 영역 표시 여부
@@ -678,6 +691,13 @@ function setLang(l) {
   document.getElementById('btn-ko').classList.toggle('active', l === 'ko');
   document.getElementById('btn-en').classList.toggle('active', l === 'en');
   updateLabels();
+  update();
+}
+
+function setDiscountVisible(v) {
+  showDiscount = v;
+  document.getElementById('btn-discount-show').classList.toggle('active', v === true);
+  document.getElementById('btn-discount-hide').classList.toggle('active', v === false);
   update();
 }
 
@@ -739,6 +759,7 @@ function resetForm() {
     if (el) el.value = defaults[id];
   });
   setSetVisible(true);
+  setDiscountVisible(false);
   update();
 }
 
