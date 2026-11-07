@@ -185,6 +185,26 @@
   .sig-tagline strong { color: #2e7d32; }
   .sig-contact { font-family: Georgia, serif; font-size: 12px; color: #555; margin-top: 3px; }
   .toast { display: none; position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: #222; color: #fff; padding: 9px 22px; border-radius: 20px; font-size: 13px; z-index: 999; white-space: nowrap; }
+  .capture-box { padding: 15px; border: 1px solid #e5e5ea; border-radius: 12px; background: #fafafa; }
+  .capture-title { font-size: 14px; font-weight: 600; }
+  .capture-help, .capture-status { font-size: 12px; color: #62626a; margin: 5px 0 10px; overflow-wrap: anywhere; }
+  .capture-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .capture-actions button { min-height: 42px; }
+  button:disabled { opacity: .45; cursor: default; }
+  .capture-list { display: flex; gap: 10px; margin-top: 10px; }
+  .capture-item { width: calc(50% - 5px); min-width: 0; }
+  .capture-item img { width: 100%; height: 110px; object-fit: contain; background: #eee; border-radius: 8px; }
+  .capture-item button { width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .capture-box textarea { width: 100%; min-height: 130px; margin-top: 8px; border: 1px solid #ddd; border-radius: 8px; padding: 10px; font: inherit; font-size: 13px; }
+  .capture-box summary { font-size: 12px; cursor: pointer; }
+  .capture-check { display: flex; align-items: center; gap: 6px; font-size: 12px; margin: 10px 0; }
+  .capture-options { display: grid; gap: 8px; margin: 10px 0; }
+  .capture-options label { display: grid; gap: 4px; font-size: 12px; }
+  .capture-options select { width: 100%; padding: 9px; border: 1px solid #ddd; border-radius: 8px; font: inherit; }
+  @media (max-width: 480px) {
+    .form-group { min-width: 100%; }
+    .form-group input, .form-group textarea, .capture-box textarea { font-size: 16px; }
+  }
 </style>
 </head>
 <body>
@@ -207,6 +227,28 @@
 
     </div>
     <div class="form-divider"></div>
+
+    <section class="capture-box" aria-labelledby="capture-title">
+      <div class="capture-title" id="capture-title">캡처로 자동 입력</div>
+      <p class="capture-help">DM·메일 캡처를 최대 2장 선택하세요. 이미지에서 읽은 정보를 아래 입력란에 채웁니다. 인식 결과는 수정할 수 있어요.</p>
+      <input id="capture-files" type="file" accept="image/png,image/jpeg,image/webp" multiple hidden>
+      <div class="capture-actions">
+        <button type="button" class="tbtn" id="capture-add">이미지 선택 · 최대 2장</button>
+        <button type="button" class="tbtn tbtn-accent" id="capture-run" disabled>읽고 자동 입력</button>
+        <button type="button" class="tbtn" id="capture-cancel" hidden>취소</button>
+        <button type="button" class="tbtn" id="capture-undo" hidden>입력 되돌리기</button>
+      </div>
+      <div class="capture-list" id="capture-list"></div>
+      <label class="capture-check"><input id="capture-overwrite" type="checkbox"> 이미 입력한 항목도 바꾸기</label>
+      <div class="capture-status" id="capture-status" role="status" aria-live="polite">이미지는 서버로 전송하지 않습니다. 첫 실행에는 인식 자료 다운로드가 필요합니다.</div>
+      <div class="capture-options" id="capture-options"></div>
+      <details id="capture-details">
+        <summary>인식한 글 확인 / 텍스트로 입력</summary>
+        <textarea id="capture-text" aria-label="인식한 글" placeholder="이미지에서 복사한 글을 여기에 붙여 넣어도 자동 입력할 수 있습니다."></textarea>
+        <button type="button" class="tbtn" id="capture-apply">이 글로 자동 입력</button>
+      </details>
+      <p class="capture-help">흐린 글자·이메일은 잘못 읽힐 수 있으니 확인해주세요. 특이사항은 ‘특이사항:’으로 명시된 내용만 입력합니다.</p>
+    </section>
 
     <!-- Row 2: 수신자 / 소속 / 담당자 -->
     <div class="form-row">
@@ -611,12 +653,12 @@ function updateLabels() {
 function update() {
   var t = TX[lang];
   var email = gi('f-email');
-  var co    = gi('f-company');
-  var nm    = gi('f-name');
-  var ev    = gi('f-event') || t.evPlaceholder;
-  var note  = gi('f-note');
+  var co    = escapeEmailText(gi('f-company'));
+  var nm    = escapeEmailText(gi('f-name'));
+  var ev    = escapeEmailText(gi('f-event')) || t.evPlaceholder;
+  var note  = escapeEmailText(gi('f-note'));
 
-  document.getElementById('to-val').innerHTML = email || '—';
+  document.getElementById('to-val').textContent = email || '—';
   var subjSuffix = (dir === 'barter') ? t.barterSubject : t.subjectSuffix;
   document.getElementById('subject-val').innerHTML = '[성수동라이프] ' + ev + subjSuffix;
 
@@ -710,6 +752,10 @@ function setSetVisible(v) {
 }
 
 function gi(id) { return document.getElementById(id).value.trim(); }
+
+function escapeEmailText(value) {
+  return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
 
 function showToast(msg) {
   var t = document.getElementById('toast');
@@ -806,5 +852,219 @@ window.onload = function() {
   update();
 };
 </script>
+<script>
+// Browser-local OCR. Only the engine and language data are fetched from the CDN.
+const captureFields = { email: '수신자 이메일', company: '소속 (회사명)', name: '담당자 이름', event: '행사명', note: '특이사항' };
+let captureImages = [], captureWorker = null, captureJob = 0, captureBusy = false, captureUndo = [];
+let captureLibraryPromise = null;
+const capEl = id => document.getElementById('capture-' + id);
+const captureStatus = text => { capEl('status').textContent = text; };
+
+function extractCaptureFields(raw) {
+  const text = raw.normalize('NFKC').replace(/\u200b/g, '').replace(/\r/g, '').replace(/[｜¦]/g, '|');
+  const lines = text.split('\n').map(s => s.trim()).filter(Boolean);
+  const found = { email: [], company: [], name: [], event: [], note: [] };
+  const add = (key, value) => {
+    value = value.trim().replace(/^[\s:：|·•-]+|[\s|]+$/g, '');
+    if (value && value.length < 200 && !found[key].includes(value)) found[key].push(value);
+  };
+  const titles = '매니저|매니져|대리|과장|차장|부장|팀장|실장|대표|이사|디렉터|주임|사원|책임|선임|본부장';
+  const labelled = (line, labels) => line.match(new RegExp('^(?:[-•·]\\s*)?(?:' + labels + ')\\s*[:：]\\s*(.+)$', 'i'));
+  for (const line of lines) {
+    const emailLine = line.replace(/\s*[@＠]\s*/g, '@').replace(/\s*\.\s*/g, '.');
+    for (const m of emailLine.matchAll(/[A-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9](?:[A-Z0-9.-]*[A-Z0-9])?\.[A-Z]{2,}/gi)) {
+      if (!/^sungsooodong@/i.test(m[0])) add('email', m[0]);
+    }
+    const co = labelled(line, '소속(?:\\s*\\(회사명\\))?|회사(?:명)?|업체(?:명)?|대행사');
+    if (co) add('company', co[1].replace(/^(?:\(\s*주\s*\)|주식회사|㈜)\s*/, ''));
+    const corporate = line.match(/^(?:\(\s*주\s*\)|㈜|주식회사)\s*([가-힣A-Za-z0-9& ._-]+)$/);
+    if (corporate) add('company', corporate[1].replace(/\s+(?:드림|올림)$/, '').replace(/([가-힣])\s+(?=[가-힣])/g, '$1'));
+    const person = labelled(line, '담당자(?:\\s*이름|명)?|성함|이름');
+    if (person) add('name', person[1].replace(/(?:님)+$/, '').replace(/매니져/g, '매니저'));
+    const signatureLine = line.replace(/([가-힣])\s+(?=[가-힣])/g, '$1');
+    const signature = signatureLine.match(new RegExp('(?:^|[\\s|])([가-힣]{2,4})\\s*(' + titles + ')(?:님)*(?=$|[\\s,.!|]|입니다|드림|올림)', 'g'));
+    if (signature) for (const s of signature) {
+      const p = s.match(new RegExp('([가-힣]{2,4})\\s*(' + titles + ')'));
+      if (p && !/^(담당자|마케팅|브랜드|성수동|라이프)$/.test(p[1])) add('name', p[1] + ' ' + p[2].replace('매니져', '매니저'));
+    }
+    const intro = line.match(new RegExp('(?:^|[,.!]\\s*|안녕하세요[,.!]?\\s*)([가-힣A-Za-z0-9&]+)(?:의|에서)?\\s+([가-힣]{2,4})\\s*(' + titles + ')\\s*(?:입니다|드림)'));
+    if (intro && !/^(저희|저는|담당|안녕하세요)$/.test(intro[1])) add('company', intro[1].replace(/의$/, ''));
+    const event = labelled(line, '행사명|팝업(?:스토어)?\\s*명|프로젝트명');
+    if (event) add('event', event[1]);
+    const note = labelled(line, '특이사항');
+    if (note && !/^(없음|없습니다|해당\s*없음|[-—])\.?$/.test(note[1])) add('note', note[1]);
+  }
+  // Match the event phrase, not the message greeting or request that follows it.
+  const joined = lines.join(' ').replace(/팝\s*업\s*스\s*토\s*어/g, '팝업스토어').replace(/팝\s+업/g, '팝업');
+  for (const m of joined.matchAll(/([가-힣A-Za-z0-9&][가-힣A-Za-z0-9&._-]*)\s+(팝업스토어|팝업\s*스토어|팝업|전시회)(?=[\s.,!?]|에서|에|의|를|는|가|와|로|$)/g)) {
+    if (!/^(성수|성수동|저희|이번|해당|신규|오픈|브랜드|운영|진행|있는|서울|및|첫|관련)$/.test(m[1])) add('event', m[1] + ' ' + m[2].replace(/팝업\s+스토어/, '팝업스토어'));
+  }
+  return found;
+}
+
+function applyCaptureText() {
+  const found = extractCaptureFields(capEl('text').value);
+  const overwrite = capEl('overwrite').checked;
+  const options = capEl('options');
+  options.replaceChildren();
+  captureUndo = [];
+  let filled = 0, ambiguous = 0, preserved = 0;
+  const put = (key, value) => {
+    const input = document.getElementById('f-' + key);
+    captureUndo.push({ id: input.id, before: input.value, after: value });
+    input.value = value;
+    capEl('undo').hidden = false;
+    update();
+  };
+  for (const key of Object.keys(captureFields)) {
+    const input = document.getElementById('f-' + key);
+    if (input.value.trim() && !overwrite) { if (found[key].length) preserved++; continue; }
+    if (found[key].length === 1) { put(key, found[key][0]); filled++; }
+    if (found[key].length > 1) {
+      ambiguous++;
+      const label = document.createElement('label');
+      label.textContent = captureFields[key] + ' 후보를 선택하세요';
+      const select = document.createElement('select');
+      select.add(new Option('선택하지 않음', ''));
+      found[key].forEach(value => select.add(new Option(value, value)));
+      select.addEventListener('change', () => { if (select.value) { put(key, select.value); select.disabled = true; } });
+      label.appendChild(select); options.appendChild(label);
+    }
+  }
+  capEl('undo').hidden = !captureUndo.length;
+  captureStatus(filled + '개 항목을 입력했습니다.' + (ambiguous ? ' 후보가 여러 개인 항목은 선택해주세요.' : '') + (preserved ? ' 기존 입력값은 유지했습니다.' : '') + ' 누락·오인식된 값은 아래에서 수정해주세요.');
+}
+
+function renderCaptureImages() {
+  capEl('list').replaceChildren();
+  captureImages.forEach((item, i) => {
+    const box = document.createElement('div'); box.className = 'capture-item';
+    const img = document.createElement('img'); img.src = item.url; img.alt = '선택한 캡처 ' + (i + 1);
+    const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'tbtn';
+    remove.textContent = (i + 1) + '번 삭제'; remove.disabled = captureBusy;
+    remove.addEventListener('click', () => {
+      URL.revokeObjectURL(item.url); captureImages.splice(i, 1); renderCaptureImages();
+    });
+    box.append(img, remove); capEl('list').appendChild(box);
+  });
+  capEl('add').disabled = captureBusy || captureImages.length >= 2;
+  capEl('run').disabled = captureBusy || !captureImages.length;
+  capEl('apply').disabled = captureBusy;
+  capEl('text').readOnly = captureBusy;
+  capEl('cancel').hidden = !captureBusy;
+}
+
+function loadCaptureLibrary() {
+  if (window.Tesseract) return Promise.resolve();
+  if (captureLibraryPromise) return captureLibraryPromise;
+  captureLibraryPromise = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@6.0.1/dist/tesseract.min.js';
+    const timer = setTimeout(() => { script.remove(); reject(new Error('인식 도구 다운로드 시간이 초과되었습니다. 네트워크를 확인하고 다시 시도해주세요.')); }, 45000);
+    script.onload = () => { clearTimeout(timer); resolve(); };
+    script.onerror = () => { clearTimeout(timer); script.remove(); reject(new Error('인식 도구를 불러오지 못했습니다. 네트워크를 확인해주세요.')); };
+    document.head.appendChild(script);
+  }).catch(error => { captureLibraryPromise = null; throw error; });
+  return captureLibraryPromise;
+}
+
+function captureCanvas(item) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onerror = () => reject(new Error('이미지를 열 수 없습니다. PNG 또는 JPG 캡처로 다시 선택해주세요.'));
+    img.onload = () => {
+      const scale = Math.min(1, 1800 / img.naturalWidth, 3600 / img.naturalHeight);
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(img.naturalWidth * scale); canvas.height = Math.round(img.naturalHeight * scale);
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      resolve(canvas);
+    };
+    img.src = item.url;
+  });
+}
+
+async function recognizeCaptures() {
+  if (captureBusy || !captureImages.length) return;
+  const job = ++captureJob;
+  captureBusy = true; renderCaptureImages();
+  capEl('options').replaceChildren();
+  captureStatus('인식 도구 준비 중… 첫 실행에는 시간이 걸릴 수 있습니다.');
+  let worker = null, index = 0;
+  const timer = setTimeout(() => { if (job === captureJob) cancelCapture('인식 시간이 초과되었습니다. 다시 시도하거나 이미지에서 복사한 글을 붙여 넣어주세요.'); }, 180000);
+  try {
+    await loadCaptureLibrary();
+    if (job !== captureJob) return;
+    const texts = [];
+    for (const language of ['kor', 'eng']) {
+    worker = await Tesseract.createWorker(language, 1, {
+      workerPath: 'https://cdn.jsdelivr.net/npm/tesseract.js@6.0.1/dist/worker.min.js',
+      corePath: 'https://cdn.jsdelivr.net/npm/tesseract.js-core@6.0.0',
+      ...(language === 'kor'
+        ? { langPath: 'https://cdn.jsdelivr.net/npm/@tesseract.js-data/kor@1.0.0/4.0.0', cachePath: 'ssd-kor-full-v1' }
+        : { langPath: 'https://cdn.jsdelivr.net/gh/tesseract-ocr/tessdata_fast@4.1.0', gzip: false, cachePath: 'ssd-eng-fast-v1' }),
+      logger: message => {
+        if (job !== captureJob) return;
+        if (message.status === 'recognizing text') captureStatus((language === 'kor' ? '한글' : '이메일') + ' ' + (index + 1) + '/' + captureImages.length + '장 읽는 중… ' + Math.round(message.progress * 100) + '%');
+      }
+    });
+    if (job !== captureJob) return;
+    captureWorker = worker;
+    await worker.setParameters({ tessedit_pageseg_mode: '6', preserve_interword_spaces: '0' });
+    for (index = 0; index < captureImages.length; index++) {
+      const canvas = await captureCanvas(captureImages[index]);
+      if (job !== captureJob) return;
+      const result = await worker.recognize(canvas);
+      canvas.width = canvas.height = 1;
+      if (job !== captureJob) return;
+      texts.push(language === 'kor' ? result.data.text : (result.data.text.match(/[A-Z0-9.!#$%&'*+/=?^_`{|}~-]+\s*@\s*[A-Z0-9.-]+\.[A-Z]{2,}/gi) || []).join('\n'));
+    }
+    await worker.terminate(); worker = null; captureWorker = null;
+    if (job !== captureJob) return;
+    }
+    capEl('text').value = texts.join('\n\n');
+    applyCaptureText();
+  } catch (error) {
+    if (job === captureJob) captureStatus('인식에 실패했습니다. ' + (error.message || '잠시 후 다시 시도해주세요.') + ' 텍스트 붙여넣기도 사용할 수 있습니다.');
+  } finally {
+    clearTimeout(timer);
+    if (worker) { try { await worker.terminate(); } catch (_) {} }
+    if (job === captureJob) { captureWorker = null; captureBusy = false; renderCaptureImages(); }
+  }
+}
+
+function cancelCapture(message) {
+  captureJob++;
+  if (captureWorker) { captureWorker.terminate().catch(() => {}); captureWorker = null; }
+  captureBusy = false; renderCaptureImages();
+  captureStatus(typeof message === 'string' ? message : '인식을 취소했습니다. 기존 입력값은 유지됩니다.');
+}
+
+capEl('add').addEventListener('click', () => capEl('files').click());
+capEl('files').addEventListener('change', event => {
+  const files = Array.from(event.target.files); event.target.value = '';
+  if (captureBusy) return;
+  if (captureImages.length + files.length > 2) { captureStatus('최대 2장까지 선택할 수 있습니다. 선택한 이미지를 줄여주세요.'); return; }
+  if (files.some(f => !/^image\/(png|jpeg|webp)$/.test(f.type) || f.size > 20 * 1024 * 1024)) {
+    captureStatus('PNG·JPG·WebP 이미지를 장당 20MB 이하로 선택해주세요.'); return;
+  }
+  files.forEach(file => captureImages.push({ file, url: URL.createObjectURL(file) }));
+  renderCaptureImages();
+  captureStatus(captureImages.length + '장 선택됨. ‘읽고 자동 입력’을 눌러주세요.');
+});
+capEl('run').addEventListener('click', recognizeCaptures);
+capEl('cancel').addEventListener('click', cancelCapture);
+capEl('apply').addEventListener('click', applyCaptureText);
+capEl('undo').addEventListener('click', () => {
+  captureUndo.slice().reverse().forEach(change => {
+    const input = document.getElementById(change.id);
+    if (input.value === change.after) input.value = change.before;
+  });
+  captureUndo = []; capEl('undo').hidden = true; capEl('options').replaceChildren(); update();
+  captureStatus('자동 입력을 되돌렸습니다. 직접 수정한 값은 유지됩니다.');
+});
+</script>
 </body>
 </html>
+
