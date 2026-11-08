@@ -887,9 +887,24 @@ function extractCaptureFields(raw) {
       const p = s.match(new RegExp('([가-힣]{2,4})\\s*(' + titles + ')'));
       if (p && !/^(담당자|마케팅|브랜드|성수동|라이프)$/.test(p[1])) add('name', p[1] + ' ' + p[2].replace('매니져', '매니저'));
     }
+    // DM introductions and signatures often omit a job title. Keep word
+    // boundaries while allowing OCR to insert spaces between name syllables.
+    const bareName = '((?:[가-힣]\\s*){2,4})';
+    const closingName = line.match(/(?:^|[\s|,])([가-힣]{2,4})\s*(?:드\s*림|올\s*림)(?=$|[\s(.!])/)
+      || line.match(new RegExp('(?:^|[\\s|,])' + bareName + '(?:드\\s*림|올\\s*림)(?=$|[\\s(.!])'));
+    const introductionLine = line.replace(/저\s*는\s*/, ' ');
+    const introductionName = /안\s*녕\s*하\s*세\s*요|저\s*는/.test(line)
+      ? introductionLine.match(/(?:^|[\s,])([가-힣]{2,4})\s*입\s*니\s*다(?=$|[\s.!])/)
+        || introductionLine.match(new RegExp('(?:^|[\\s,])' + bareName + '입\\s*니\\s*다(?=$|[\\s.!])')) : null;
+    for (const match of [closingName, introductionName]) {
+      if (!match) continue;
+      const name = match[1].replace(/\s/g, '');
+      if (new RegExp('(?:' + titles + ')$').test(name)) continue;
+      if (!/^(감사|감사합니|부탁|문의|안내|연락|담당자|매니저|대행사|홍보대행사|성수동|라이프)$/.test(name)) add('name', name);
+    }
     const intro = line.match(new RegExp('(?:^|[,.!]\\s*|안녕하세요[,.!]?\\s*)([가-힣A-Za-z0-9&]+)(?:의|에서)?\\s+([가-힣]{2,4})\\s*(' + titles + ')\\s*(?:입니다|드림)'));
     if (intro && !/^(저희|저는|담당|안녕하세요)$/.test(intro[1])) add('company', intro[1].replace(/의$/, ''));
-    const event = labelled(line, '행사명|팝업(?:스토어)?\\s*명|프로젝트명');
+    const event = labelled(line, '행사(?:명)?|팝업(?:스토어)?\\s*명|프로젝트(?:명)?|캠페인(?:명)?');
     if (event) add('event', event[1]);
     const note = labelled(line, '특이사항');
     if (note && !/^(없음|없습니다|해당\s*없음|[-—])\.?$/.test(note[1])) add('note', note[1]);
@@ -899,6 +914,26 @@ function extractCaptureFields(raw) {
   for (const m of joined.matchAll(/([가-힣A-Za-z0-9&][가-힣A-Za-z0-9&._-]*)\s+(팝업스토어|팝업\s*스토어|팝업|전시회)(?=[\s.,!?]|에서|에|의|를|는|가|와|로|$)/g)) {
     if (!/^(성수|성수동|저희|이번|해당|신규|오픈|브랜드|운영|진행|있는|서울|및|첫|관련)$/.test(m[1])) add('event', m[1] + ' ' + m[2].replace(/팝업\s+스토어/, '팝업스토어'));
   }
+  // A campaign need not be a popup. Use the inquiry's subject, stopping
+  // before the content/publication request, rather than later logistics.
+  const campaignText = joined
+    .replace(/옥\s*외\s*광\s*고/g, '옥외광고')
+    .replace(/캠\s*페\s*인/g, '캠페인')
+    .replace(/홍\s*보\s*콘\s*텐\s*츠/g, '홍보 콘텐츠')
+    .replace(/게\s*재/g, '게재')
+    .replace(/문\s*의/g, '문의');
+  for (const sentence of campaignText.split(/[.!?\n]/)) {
+    if (!/문의/.test(sentence)) continue;
+    const subject = sentence.match(/^(.{1,100}?(?:옥외광고|캠페인|프로모션|페스티벌|전시회))\s*(?:홍보\s*(?:콘텐츠)?|콘텐츠|게재|관련|에\s*대해|문의)/);
+    if (!subject) continue;
+    const event = subject[1].trim()
+      .replace(/^(?:(?:저희|이번|다가오는)\s+)+/, '')
+      .replace(/^(?:\d{4}\s*년\s*)?\d{1,2}\s*월\s*(?:(?:\d{1,2}\s*일|초|중순|말|중)\s*)?/, '')
+      .replace(/^(?:예정인|진행하는|진행\s*예정인)\s+/, '').trim();
+    if (event.split(/\s+/).length <= 8 && !/^(?:옥외광고|캠페인|프로모션|페스티벌|전시회)$/.test(event)) add('event', event);
+  }
+  // Prefer the more complete version if the same person also signed without a title.
+  found.name = found.name.filter(name => !found.name.some(other => other !== name && other.startsWith(name + ' ')));
   return found;
 }
 
