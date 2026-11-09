@@ -869,8 +869,23 @@ function extractCaptureFields(raw) {
     if (value && value.length < 200 && !found[key].includes(value)) found[key].push(value);
   };
   const titles = '매니저|매니져|대리|과장|차장|부장|팀장|실장|대표|이사|디렉터|주임|사원|책임|선임|본부장';
-  const labelled = (line, labels) => line.match(new RegExp('^(?:[-•·]\\s*)?(?:' + labels + ')\\s*[:：]\\s*(.+)$', 'i'));
-  for (const line of lines) {
+  const labelled = (line, labels) => {
+    // Normalize only the field label; spaces in company/event values carry meaning.
+    const normalized = line.replace(/^([^:：]+)([:：])/, (_, label, colon) => label.replace(/\s/g, '') + colon);
+    return normalized.match(new RegExp('^(?:[-•·]\\s*)?(?:' + labels + ')\\s*[:：]\\s*(.+)$', 'i'));
+  };
+  const normalizeTitle = value => {
+    for (const title of titles.split('|').sort((a, b) => b.length - a.length)) {
+      value = value.replace(new RegExp(title.split('').join('\\s*'), 'g'), title);
+    }
+    return value.replace(/매니져/g, '매니저');
+  };
+  const normalizePerson = value => {
+    const compact = normalizeTitle(value).replace(/\s/g, '').replace(/(?:님)+$/, '');
+    const titled = compact.match(new RegExp('^([가-힣]{2,4})(' + titles + ')$'));
+    return titled ? titled[1] + ' ' + titled[2] : /^[가-힣]{2,4}$/.test(compact) ? compact : value.trim().replace(/(?:님)+$/, '');
+  };
+  for (const [lineIndex, line] of lines.entries()) {
     const emailLine = line.replace(/\s*[@＠]\s*/g, '@').replace(/\s*\.\s*/g, '.');
     for (const m of emailLine.matchAll(/[A-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9](?:[A-Z0-9.-]*[A-Z0-9])?\.[A-Z]{2,}/gi)) {
       if (!/^sungsooodong@/i.test(m[0])) add('email', m[0]);
@@ -880,12 +895,15 @@ function extractCaptureFields(raw) {
     const corporate = line.match(/^(?:\(\s*주\s*\)|㈜|주식회사)\s*([가-힣A-Za-z0-9& ._-]+)$/);
     if (corporate) add('company', corporate[1].replace(/\s+(?:드림|올림)$/, '').replace(/([가-힣])\s+(?=[가-힣])/g, '$1'));
     const person = labelled(line, '담당자(?:\\s*이름|명)?|성함|이름');
-    if (person) add('name', person[1].replace(/(?:님)+$/, '').replace(/매니져/g, '매니저'));
-    const signatureLine = line.replace(/([가-힣])\s+(?=[가-힣])/g, '$1');
-    const signature = signatureLine.match(new RegExp('(?:^|[\\s|])([가-힣]{2,4})\\s*(' + titles + ')(?:님)*(?=$|[\\s,.!|]|입니다|드림|올림)', 'g'));
-    if (signature) for (const s of signature) {
-      const p = s.match(new RegExp('([가-힣]{2,4})\\s*(' + titles + ')'));
-      if (p && !/^(담당자|마케팅|브랜드|성수동|라이프)$/.test(p[1])) add('name', p[1] + ' ' + p[2].replace('매니져', '매니저'));
+    if (person) add('name', normalizePerson(person[1]));
+    // Preserve word boundaries: joining the whole line merges company + person.
+    const signatureLine = normalizeTitle(line).replace(/입\s*니\s*다/g, '입니다');
+    const titleEnd = '\\s*(' + titles + ')(?:님)*(?=$|[\\s,.!|]|입니다|드림|올림)';
+    const signatures = [...signatureLine.matchAll(new RegExp('(?:^|[\\s|,])([가-힣]{2,4})' + titleEnd, 'g'))];
+    if (!signatures.length) signatures.push(...signatureLine.matchAll(new RegExp('(?:^|[\\s|,])((?:[가-힣]\\s*){2,4})' + titleEnd, 'g')));
+    for (const p of signatures) {
+      const name = p[1].replace(/\s/g, '');
+      if (!/^(담당자|마케팅|브랜드|성수동|라이프)$/.test(name)) add('name', name + ' ' + p[2]);
     }
     // DM introductions and signatures often omit a job title. Keep word
     // boundaries while allowing OCR to insert spaces between name syllables.
@@ -893,7 +911,8 @@ function extractCaptureFields(raw) {
     const closingName = line.match(/(?:^|[\s|,])([가-힣]{2,4})\s*(?:드\s*림|올\s*림)(?=$|[\s(.!])/)
       || line.match(new RegExp('(?:^|[\\s|,])' + bareName + '(?:드\\s*림|올\\s*림)(?=$|[\\s(.!])'));
     const introductionLine = line.replace(/저\s*는\s*/, ' ');
-    const introductionName = /안\s*녕\s*하\s*세\s*요|저\s*는/.test(line)
+    const greetingAbove = lineIndex > 0 && /안\s*녕\s*하\s*세\s*요[,.!]?\s*$/.test(lines[lineIndex - 1]);
+    const introductionName = greetingAbove || /안\s*녕\s*하\s*세\s*요|저\s*는/.test(line)
       ? introductionLine.match(/(?:^|[\s,])([가-힣]{2,4})\s*입\s*니\s*다(?=$|[\s.!])/)
         || introductionLine.match(new RegExp('(?:^|[\\s,])' + bareName + '입\\s*니\\s*다(?=$|[\\s.!])')) : null;
     for (const match of [closingName, introductionName]) {
@@ -903,9 +922,9 @@ function extractCaptureFields(raw) {
       if (!/^(감사|감사합니|부탁|문의|안내|연락|담당자|매니저|대행사|홍보대행사|성수동|라이프)$/.test(name)) add('name', name);
     }
     const intro = line.match(new RegExp('(?:^|[,.!]\\s*|안녕하세요[,.!]?\\s*)([가-힣A-Za-z0-9&]+)(?:의|에서)?\\s+([가-힣]{2,4})\\s*(' + titles + ')\\s*(?:입니다|드림)'));
-    if (intro && !/^(저희|저는|담당|안녕하세요)$/.test(intro[1])) add('company', intro[1].replace(/의$/, ''));
+    if (intro && !/^(저희|저는|담당|안녕하세요|홍보대행사|광고대행사|대행사)$/.test(intro[1])) add('company', intro[1].replace(/의$/, ''));
     const event = labelled(line, '행사(?:명)?|팝업(?:스토어)?\\s*명|프로젝트(?:명)?|캠페인(?:명)?');
-    if (event) add('event', event[1]);
+    if (event) add('event', event[1].replace(/옥\s*외\s*광\s*고/g, '옥외광고').replace(/팝\s*업\s*스\s*토\s*어/g, '팝업스토어'));
     const note = labelled(line, '특이사항');
     if (note && !/^(없음|없습니다|해당\s*없음|[-—])\.?$/.test(note[1])) add('note', note[1]);
   }
@@ -921,8 +940,10 @@ function extractCaptureFields(raw) {
     .replace(/캠\s*페\s*인/g, '캠페인')
     .replace(/홍\s*보\s*콘\s*텐\s*츠/g, '홍보 콘텐츠')
     .replace(/게\s*재/g, '게재')
-    .replace(/문\s*의/g, '문의');
-  for (const sentence of campaignText.split(/[.!?\n]/)) {
+    .replace(/문\s*의/g, '문의')
+    .replace(/입\s*니\s*다/g, '입니다');
+  // Chat messages frequently omit punctuation after an introduction.
+  for (const sentence of campaignText.split(/(?:[.!?\n]|입니다(?=\s|$))/)) {
     if (!/문의/.test(sentence)) continue;
     const subject = sentence.match(/^(.{1,100}?(?:옥외광고|캠페인|프로모션|페스티벌|전시회))\s*(?:홍보\s*(?:콘텐츠)?|콘텐츠|게재|관련|에\s*대해|문의)/);
     if (!subject) continue;
