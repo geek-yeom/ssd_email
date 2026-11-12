@@ -885,17 +885,35 @@ function extractCaptureFields(raw) {
     const titled = compact.match(new RegExp('^([가-힣]{2,4})(' + titles + ')$'));
     return titled ? titled[1] + ' ' + titled[2] : /^[가-힣]{2,4}$/.test(compact) ? compact : value.trim().replace(/(?:님)+$/, '');
   };
+  // A DM may introduce a brand rather than a person. Confirm the full identity
+  // using independent mentions before accepting short name fragments from OCR.
+  const compactText = text.replace(/\s/g, '');
+  const introduced = new Set(), signed = new Set(), explicitPeople = new Set();
+  const ownsPopup = /저희(?:브랜드의?|가운영하는|의)?팝업(?:스토어)?/.test(compactText);
+  for (const line of lines) {
+    const identityLine = line.replace(/\s/g, '').replace(/^[^가-힣A-Za-z0-9]+/, '')
+      .replace(/^안녕하세요[,!.]?/, '');
+    const introduction = identityLine.match(/^([가-힣A-Za-z0-9&._-]{2,40})입니다[.!。]?$/);
+    const signature = identityLine.match(/^([가-힣A-Za-z0-9&._-]{2,40})(?:드림|올림)[.!。]?$/);
+    if (introduction) introduced.add(introduction[1]);
+    if (signature) signed.add(signature[1]);
+  }
+  for (const identity of introduced) {
+    if (/^(?:성수동라이프|저희|감사|안내|문의)$/.test(identity) || new RegExp('(?:' + titles + ')$').test(identity)) continue;
+    const brandMention = compactText.includes(identity + '에관심') || compactText.includes('브랜드' + identity);
+    if (brandMention || (identity.length > 4 && signed.has(identity) && ownsPopup)) add('company', identity);
+  }
   for (const [lineIndex, line] of lines.entries()) {
     const emailLine = line.replace(/\s*[@＠]\s*/g, '@').replace(/\s*\.\s*/g, '.');
     for (const m of emailLine.matchAll(/[A-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9](?:[A-Z0-9.-]*[A-Z0-9])?\.[A-Z]{2,}/gi)) {
       if (!/^sungsooodong@/i.test(m[0])) add('email', m[0]);
     }
-    const co = labelled(line, '소속(?:\\s*\\(회사명\\))?|회사(?:명)?|업체(?:명)?|대행사');
+    const co = labelled(line, '소속(?:\\s*\\(회사명\\))?|회사(?:명)?|업체(?:명)?|대행사|브랜드(?:명)?');
     if (co) add('company', co[1].replace(/^(?:\(\s*주\s*\)|주식회사|㈜)\s*/, ''));
     const corporate = line.match(/^(?:\(\s*주\s*\)|㈜|주식회사)\s*([가-힣A-Za-z0-9& ._-]+)$/);
     if (corporate) add('company', corporate[1].replace(/\s+(?:드림|올림)$/, '').replace(/([가-힣])\s+(?=[가-힣])/g, '$1'));
     const person = labelled(line, '담당자(?:\\s*이름|명)?|성함|이름');
-    if (person) add('name', normalizePerson(person[1]));
+    if (person) { const name = normalizePerson(person[1]); add('name', name); explicitPeople.add(name); }
     // Preserve word boundaries: joining the whole line merges company + person.
     const signatureLine = normalizeTitle(line).replace(/입\s*니\s*다/g, '입니다');
     const titleEnd = '\\s*(' + titles + ')(?:님)*(?=$|[\\s,.!|]|입니다|드림|올림)';
@@ -903,7 +921,7 @@ function extractCaptureFields(raw) {
     if (!signatures.length) signatures.push(...signatureLine.matchAll(new RegExp('(?:^|[\\s|,])((?:[가-힣]\\s*){2,4})' + titleEnd, 'g')));
     for (const p of signatures) {
       const name = p[1].replace(/\s/g, '');
-      if (!/^(담당자|마케팅|브랜드|성수동|라이프)$/.test(name)) add('name', name + ' ' + p[2]);
+      if (!/^(담당자|마케팅|브랜드|성수동|라이프)$/.test(name)) { add('name', name + ' ' + p[2]); explicitPeople.add(name + ' ' + p[2]); }
     }
     // DM introductions and signatures often omit a job title. Keep word
     // boundaries while allowing OCR to insert spaces between name syllables.
@@ -930,12 +948,16 @@ function extractCaptureFields(raw) {
   }
   // Match the event phrase, not the message greeting or request that follows it.
   const joined = lines.join(' ').replace(/팝\s*업\s*스\s*토\s*어/g, '팝업스토어').replace(/팝\s+업/g, '팝업');
+  const genericPopupPrefix = /^(성수|성수동|저희|이번|해당|신규|오픈|브랜드|운영|진행|있는|서울|및|첫|관련|하는|진행하는|열리는|개최하는|예정인|준비하는|방문한|소개하는|진행중인)$/;
+  for (const m of joined.matchAll(/([가-힣A-Za-z0-9&._-]+)\s+(성수(?:동)?)\s+(팝업스토어|팝업)(?=[\s.,!?]|에서|에|의|를|는|가|와|로|$)/g)) {
+    if (!genericPopupPrefix.test(m[1])) add('event', m[1] + ' ' + m[2].replace(/동$/, '') + ' ' + m[3]);
+  }
   for (const m of joined.matchAll(/([가-힣A-Za-z0-9&][가-힣A-Za-z0-9&._-]*)\s+(팝업스토어|팝업\s*스토어|팝업|전시회)(?=[\s.,!?]|에서|에|의|를|는|가|와|로|$)/g)) {
-    if (!/^(성수|성수동|저희|이번|해당|신규|오픈|브랜드|운영|진행|있는|서울|및|첫|관련)$/.test(m[1])) add('event', m[1] + ' ' + m[2].replace(/팝업\s+스토어/, '팝업스토어'));
+    if (!genericPopupPrefix.test(m[1])) add('event', m[1] + ' ' + m[2].replace(/팝업\s+스토어/, '팝업스토어'));
   }
   // A campaign need not be a popup. Use the inquiry's subject, stopping
   // before the content/publication request, rather than later logistics.
-  const campaignText = joined
+  const campaignText = lines.filter(line => !labelled(line, '소속(?:\\s*\\(회사명\\))?|회사(?:명)?|업체(?:명)?|대행사|브랜드(?:명)?|담당자(?:이름|명)?|이름|성함|이메일|수신자이메일|특이사항')).join(' ')
     .replace(/옥\s*외\s*광\s*고/g, '옥외광고')
     .replace(/캠\s*페\s*인/g, '캠페인')
     .replace(/홍\s*보\s*콘\s*텐\s*츠/g, '홍보 콘텐츠')
@@ -953,7 +975,10 @@ function extractCaptureFields(raw) {
       .replace(/^(?:예정인|진행하는|진행\s*예정인)\s+/, '').trim();
     if (event.split(/\s+/).length <= 8 && !/^(?:옥외광고|캠페인|프로모션|페스티벌|전시회)$/.test(event)) add('event', event);
   }
+  // User-selected default; explicit event/campaign subjects always take priority.
+  if (!found.event.length && found.company.length === 1) add('event', found.company[0] + ' 성수 팝업');
   // Prefer the more complete version if the same person also signed without a title.
+  found.name = found.name.filter(name => explicitPeople.has(name) || !found.company.some(company => company.replace(/\s/g, '').endsWith(name.replace(/\s/g, ''))));
   found.name = found.name.filter(name => !found.name.some(other => other !== name && other.startsWith(name + ' ')));
   return found;
 }
