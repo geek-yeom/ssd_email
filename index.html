@@ -530,7 +530,7 @@ var TX = {
 
 function lnk(url, label) {
   if (!url) return '';
-  return '<a href="' + url + '" target="_blank">' + label + '</a>';
+  return '<a href="' + url + '" target="_blank" rel="noopener noreferrer" contenteditable="false" tabindex="0">' + label + '</a>';
 }
 
 // Keep editable prices in their original form; format only the generated email.
@@ -840,7 +840,23 @@ function insertEmailLineBreak(event) {
   selection.addRange(range);
 }
 var emailEditor = document.getElementById('email-body');
+// Editable email previews suppress normal link navigation. Use the same
+// delegated click for mouse and touch, including links rebuilt by update().
+function openEmailPreviewLink(event) {
+  var link = event.target.closest && event.target.closest('a[href]');
+  if (!link || !emailEditor.contains(link)) return false;
+  var url;
+  try { url = new URL(link.href); } catch (_) { return false; }
+  if (!/^https?:$/.test(url.protocol)) return false;
+  event.preventDefault();
+  window.open(url.href, '_blank', 'noopener,noreferrer');
+  return true;
+}
+emailEditor.addEventListener('click', function(event) {
+  if (event.button === 0) openEmailPreviewLink(event);
+});
 emailEditor.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter' && openEmailPreviewLink(event)) return;
   if (event.key === 'Enter' && event.keyCode !== 229) insertEmailLineBreak(event);
 });
 emailEditor.addEventListener('beforeinput', function(event) {
