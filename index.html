@@ -60,9 +60,9 @@
   .dir-grid-row {
     display: flex; background: #f2f2f7;
     border-radius: 12px; overflow: hidden;
-    gap: 1px; width: 100%;
+    gap: 1px; width: 100%; flex-wrap: wrap;
   }
-  .dir-grid-row .dir-btn { flex: 1; }
+  .dir-grid-row .dir-btn { flex: 1 1 90px; }
 
   /* ── 문의 유형 그리드 (2x2 fallback) ── */
   .dir-grid {
@@ -222,6 +222,7 @@
         <button class="dir-btn active" id="btn-in" onclick="setDir('in')">Inbound</button>
         <button class="dir-btn" id="btn-out" onclick="setDir('out')">Outbound</button>
         <button class="dir-btn" id="btn-barter" onclick="setDir('barter')">유가→바터</button>
+        <button class="dir-btn" id="btn-tax" onclick="setDir('tax')">세금계산서</button>
         <button class="dir-btn" id="btn-custom" onclick="setDir('custom')">커스텀</button>
       </div>
 
@@ -661,6 +662,7 @@ function update() {
   document.getElementById('to-val').textContent = email || '—';
   var subjSuffix = (dir === 'barter') ? t.barterSubject : t.subjectSuffix;
   document.getElementById('subject-val').innerHTML = '[성수동라이프] ' + ev + subjSuffix;
+  if (dir === 'tax') document.getElementById('subject-val').textContent = '[성수동라이프] 세금계산서 발행 및 비용 지급 자료 안내';
 
   var greeting;
   if (co || nm) {
@@ -671,7 +673,7 @@ function update() {
     // 직급 포함 시 → "이름 직급님" / 이름만 입력 시 → "이름 담당자님"
     var nmLabel = nm ? (hasTitle ? nm.replace(/(?:님)+$/, '') + '님' : nm + ' 담당자님') : (co ? '담당자님' : '');
     var coLabel = co || '';
-    if (lang === 'ko') {
+    if (lang === 'ko' || dir === 'tax') {
       var parts = [coLabel, nmLabel].filter(Boolean).join(' ');
       greeting = '안녕하세요, ' + parts + '.<br>성수동라이프 장현경 에디터입니다.<br><br>';
     } else {
@@ -693,11 +695,18 @@ function update() {
   } else if (dir === 'barter') {
     body += t.barterBody;
     if (note) body += '<br>' + note;
+  } else if (dir === 'tax') {
+    if (!co && !nm) body = '안녕하세요, 매니저님<br>성수동라이프 장현경 에디터입니다.<br><br>';
+    var taxDocumentsUrl = 'https://drive.google.com/drive/folders/1Q0DKhDQXlx_JIUE0HI4_L7gZOIzsfvBO?usp=sharing';
+    body += '세금계산서 발행을 위한 사업자등록증과 발행 이메일 주소 전달 부탁드리겠습니다.<br>'
+      + '추가로, 비용 지급을 위한 자료 전달드립니다.<br><br>'
+      + '- 사업자 등록증 / 통장 사본 : 링크 확인<br>'
+      + lnk(taxDocumentsUrl, taxDocumentsUrl) + '<br><br>감사합니다.';
   } else if (dir === 'custom') {
     var customText = document.getElementById('f-custom').value.trim();
     body += customText ? customText.replace(/\n/g, '<br>') : '(여기에 내용을 입력하세요)';
   }
-  if (showDiscount) {
+  if (showDiscount && dir !== 'tax') {
     body += '<br><br>' + (lang === 'ko'
       ? '참고로, 요청해주신 <strong>F&amp;B 매장</strong>의 경우 일반 성수 팝업과 성격이 다른 상황을 감안하여<br>아래 제작 비용에서 20% 할인 적용해드리고 있습니다.<br>보시고 함께하고 싶은 내용이 있으면 편하게 말씀주시기 바랍니다.'
       : 'As your F&amp;B project differs from a typical Seongsu pop-up, we are offering a 20% discount on the production fees below.<br>Please feel free to let us know which options you would like to explore together.');
@@ -712,10 +721,10 @@ function update() {
 
 function setDir(d) {
   dir = d;
-  ['btn-in','btn-out','btn-barter','btn-custom'].forEach(function(id) {
+  ['btn-in','btn-out','btn-barter','btn-tax','btn-custom'].forEach(function(id) {
     document.getElementById(id).classList.remove('active');
   });
-  document.getElementById('btn-' + (d === 'in' ? 'in' : d === 'out' ? 'out' : d === 'barter' ? 'barter' : 'custom')).classList.add('active');
+  document.getElementById('btn-' + d).classList.add('active');
   document.getElementById('custom-row').style.display = (d === 'custom') ? '' : 'none';
   document.getElementById('catalog-toggle-row').style.display = (d === 'custom') ? '' : 'none';
   update();
