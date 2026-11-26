@@ -434,8 +434,8 @@ var issueLinks = [
   'https://www.instagram.com/p/C0h6IEDvCvs/',
   'https://www.instagram.com/p/DDa_nvlziTR'
 ];
-var setRows = [["SET1", "", "O", "", "", "1wk", "3d", "2d", "O", "750,000", "600,000", "20%"], ["SET2", "", "O", "", "O", "1wk", "7d", "2d", "O", "1,350,000", "1,000,000", "26%"], ["SET3", "O", "", "O", "", "2wk", "7d", "2d", "O", "1,850,000", "1,300,000", "30%"]];
-var setRowsKo = [["SET1", "", "O", "", "", "1주", "3일", "2일", "O", "750,000", "600,000", "20%"], ["SET2", "", "O", "", "O", "1주", "7일", "2일", "O", "1,350,000", "1,000,000", "26%"], ["SET3", "O", "", "O", "", "2주", "7일", "2일", "O", "1,850,000", "1,300,000", "30%"]];
+var setRows = [["SET1","O","","","","1wk","3d","2d","","450,000","300,000","33%"],["SET2","","O","","","1wk","3d","2d","","750,000","600,000","20%"],["SET3","","","O","O","2wk","7d","2d","O","1,350,000","1,000,000","26%"],["SET4","","O","O","O","2wk","7d","2d","O","1,850,000","1,300,000","30%"]];
+var setRowsKo = [["SET1","O","","","","1주","3일","2일","","450,000","300,000","33%"],["SET2","","O","","","1주","3일","2일","","750,000","600,000","20%"],["SET3","","","O","O","2주","7일","2일","O","1,350,000","1,000,000","26%"],["SET4","","O","O","O","2주","7일","2일","O","1,850,000","1,300,000","30%"]];
 
 var TX = {
   ko: {
@@ -469,10 +469,10 @@ var TX = {
     h3desc: '티징, 브랜드 이벤트 소개 + 팝업 예고<br>브랜드 영상/텍스트 사용, 성수동라이프 톤으로 재구성하여 발행<br>팝업스토어 오픈 전 사전 마케팅에 효과적',
     issueRows: [['인스타그램 피드 (이미지 최대 5장 / 텍스트 400~500자)','25만원']],
     setTitle: 'SET 구성 — 채널은 다양하게, 할인율은 더 높게',
-    setNote: '방문 촬영 기준',
+    setNote: 'SET1 브랜드 제공 이미지 / SET2~4 방문 촬영 기준',
     setHeaders: ['구분','브랜드<br>이슈','피드','릴스','틱톡<br>유튜브','위클리<br>성수','상단<br>고정','스토리','쓰레드','단가','할인가','할인율'],
     setFootnote: '※ 브랜드 이슈 : 브랜드 사진 활용해 피드 구성 | ※ 위클리성수 : 주간 팝업 큐레이션 소개',
-    setItems: ["SET 1 · 피드 기본형<br>피드 + 위클리성수(1주) + 상단고정(3일) + 스토리(2일) + 쓰레드 : 75만원 → <strong>60만원 (20% OFF)</strong>", "SET 2 · 멀티채널형<br>피드 + 틱톡·유튜브 + 위클리성수(1주) + 상단고정(7일) + 스토리(2일) + 쓰레드 : 135만원 → <strong>100만원 (26% OFF)</strong>", "SET 3 · 영상 강조형<br>브랜드이슈 + 릴스 + 위클리성수(2주) + 상단고정(7일) + 스토리(2일) + 쓰레드 : 185만원 → <strong>130만원 (30% OFF)</strong>"],
+    setItems: ["SET 1 · 브랜드 소개형<br>브랜드 이슈 + 위클리성수(1주) + 상단고정(3일) + 스토리(2일) : 45만원 → <strong>30만원 (33% OFF)</strong>","SET 2 · 피드 기본형<br>피드 + 위클리성수(1주) + 상단고정(3일) + 스토리(2일) : 75만원 → <strong>60만원 (20% OFF)</strong>","SET 3 · 영상 강조형<br>릴스 + 틱톡·유튜브 + 위클리성수(2주) + 상단고정(7일) + 스토리(2일) + 쓰레드 : 135만원 → <strong>100만원 (26% OFF)</strong><br><span class=\"notice\">※ 전체 자막 진행시 +10만원</span>","SET 4 · 통합 홍보형<br>피드 + 릴스 + 틱톡·유튜브 + 위클리성수(2주) + 상단고정(7일) + 스토리(2일) + 쓰레드 : 185만원 → <strong>130만원 (30% OFF)</strong><br><span class=\"notice\">※ 전체 자막 진행시 +10만원</span>"],
     process: '※ 진행 프로세스 : 사전 가이드 전달 → 현장 촬영 → 시안 컨펌 → 업로드 → 비용 지급<br>※ 특정 카테고리의 경우, 일부 바터(브랜드 상품권·제품)로 운영 가능합니다.',
     closing: '내용 보시고 궁금한 사항 있으시면 편하게 문의해 주세요. 감사합니다.',
     sigTagline: '매일 새로운 성수동 이야기, <strong>성수동라이프</strong>',
@@ -514,10 +514,10 @@ var TX = {
     h3desc: 'Teaser, brand event intro + pop-up preview<br>Recreated in Sungsooodong editorial tone using brand assets<br>Ideal for pre-opening buzz',
     issueRows: [['Instagram Feed (up to 5 images / 400–500 characters)','KRW 250,000']],
     setTitle: 'Package Bundles — More Channels, Better Rates',
-    setNote: 'Based on on-site shoot',
+    setNote: 'SET1: brand-provided images / SET2–4: on-site shoot',
     setHeaders: ['Bundle','Brand<br>Issue','Feed','Reels','TikTok<br>YouTube','Weekly','Pin','Story','Threads','List Price','Price','Disc.'],
     setFootnote: '※ Brand Issue: feed post using brand-provided assets | ※ Weekly Sungsu: weekly pop-up curation',
-    setItems: ["SET 1 · Feed Essentials<br>Feed + Weekly(1wk) + Pin(3d) + Story(2d) + Threads : KRW 750,000 → <strong>KRW 600,000 (20% OFF)</strong>", "SET 2 · Multi-channel<br>Feed + TikTok/YouTube + Weekly(1wk) + Pin(7d) + Story(2d) + Threads : KRW 1,350,000 → <strong>KRW 1,000,000 (26% OFF)</strong>", "SET 3 · Video Focus<br>Brand Issue + Reels + Weekly(2wk) + Pin(7d) + Story(2d) + Threads : KRW 1,850,000 → <strong>KRW 1,300,000 (30% OFF)</strong>"],
+    setItems: ["SET 1 · Brand Introduction<br>Brand Issue + Weekly(1wk) + Pin(3d) + Story(2d) : KRW 450,000 → <strong>KRW 300,000 (33% OFF)</strong>","SET 2 · Feed Essentials<br>Feed + Weekly(1wk) + Pin(3d) + Story(2d) : KRW 750,000 → <strong>KRW 600,000 (20% OFF)</strong>","SET 3 · Video Focus<br>Reels + TikTok/YouTube + Weekly(2wk) + Pin(7d) + Story(2d) + Threads : KRW 1,350,000 → <strong>KRW 1,000,000 (26% OFF)</strong><br><span class=\"notice\">※ Full captions: +KRW 100,000</span>","SET 4 · Integrated Promotion<br>Feed + Reels + TikTok/YouTube + Weekly(2wk) + Pin(7d) + Story(2d) + Threads : KRW 1,850,000 → <strong>KRW 1,300,000 (30% OFF)</strong><br><span class=\"notice\">※ Full captions: +KRW 100,000</span>"],
     process: '※ Process: Brief → On-site Shoot → Draft Approval → Upload → Payment<br>※ Barter arrangements (gift cards, products) available for select categories.',
     closing: 'Feel free to reach out if you have any questions. Thank you!',
     sigTagline: 'Daily stories from Seongsu-dong — <strong>Sungsooodong</strong>',
